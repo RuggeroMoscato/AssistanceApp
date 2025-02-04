@@ -5,12 +5,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { ScrollView, Text, View } from "react-native";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Redirect, router } from "expo-router";
-import { useGlobalContext } from "../context/GlobalContext";
 import { Button } from "@mui/material";
 import { Picker } from "@react-native-picker/picker";
 
 function RobotSheet() {
-  const { isLogged } = useGlobalContext();
   const [robotsList, setRobotsList] = useState([]);
   const [robotInfo, setRobotInfo] = useState();
   const [selectedRobot, setSelectedRobot] = useState([]);

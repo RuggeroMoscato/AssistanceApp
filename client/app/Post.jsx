@@ -8,10 +8,8 @@ import { ScrollView, Text, View } from "react-native";
 import { Button, TextField } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Redirect, router } from "expo-router";
-import { useGlobalContext } from "../context/GlobalContext";
 
 function Info() {
-  const { isLogged } = useGlobalContext();
 
   const { notify: notifySuccess } = useNotistack(
     "Info inserite con successo",
