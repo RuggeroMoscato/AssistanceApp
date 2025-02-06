@@ -1,25 +1,16 @@
 import logo from "../assets/logo_copernico.png";
 import useNotistack from "../hooks/useNotistack";
-import axios from "axios";
 import { useFormik } from "formik";
-import { Button, Image, TextInput, View } from "react-native";
+import { Button, Image, Text, TextInput, View } from "react-native";
 import style from "./styles";
 import * as Yup from "yup";
 import { TouchableOpacity } from "react-native";
-// import { Redirect, router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { useState } from "react";
 import { authInstance } from "../firebase";
 
 const Login = () => {
-  const { setIsLogged, isLogged } = useState();
-  // const { notify: notifySuccess } = useNotistack(
-  //   "Login eseguito con successo",
-  //   "success"
-  // );
-  // const { notify: notifyError } = useNotistack(
-  //   "Errore, Dati inseriti non corretti",
-  //   "error"
-  // );
+  const [isLogged, setIsLogged] = useState(false);
 
   const { handleChange, values, handleSubmit, touched, errors } = useFormik({
     initialValues: {
@@ -34,21 +25,20 @@ const Login = () => {
         .required("Password Richiesta"),
     }),
     onSubmit: (values) => {
-      handleLogin(authInstance, values.email, values.password);
+      handleLogin(values.email, values.password); 
     },
   });
 
-  const handleLogin = async () => {
+  const handleLogin = async (email, password) => { 
     try {
       const userCredential = await authInstance.signInWithEmailAndPassword(
-        auth,
         email,
-        password
+        password 
       );
 
       if (userCredential.user) {
-        // notify('Login riuscito!', 'success');
         setIsLogged(true);
+        router.replace("/RobotSheet");
       }
     } catch (error) {
       let errorMessage = "Errore durante il login";
@@ -66,39 +56,38 @@ const Login = () => {
           errorMessage = "Password errata";
           break;
       }
-      // notify(errorMessage, 'error');
+      alert(errorMessage);
     }
   };
-  // if (isLogged === true) return <Redirect href="/RobotSheet" />;
+
+  if (isLogged) return <Redirect href="/RobotSheet" />;
 
   return (
     <View style={style.loginPage}>
       <View style={style.loginWidget}>
         <Image source={logo} resizeMode="contain" style={style.image} />
         <TextInput
-          title="Email"
-          id="email"
-          name="email"
-          type="email"
           placeholder="Email"
           style={style.loginInput}
-          onChange={handleChange}
+          onChangeText={handleChange('email')} 
           value={values.email}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
-        {touched.email && errors.email && <p>{errors.email}</p>}
+        {touched.email && errors.email && <Text style={style.errorText}>{errors.email}</Text>}
+        
         <TextInput
-          title="Password"
-          id="password"
-          name="password"
-          type="password"
-          style={style.loginInput}
           placeholder="Password"
-          onChange={handleChange}
+          style={style.loginInput}
+          onChangeText={handleChange('password')}
           value={values.password}
+          secureTextEntry={true} 
+          autoCapitalize="none"
         />
-        {touched.password && errors.password && <p>{errors.password}</p>}
+        {touched.password && errors.password && <Text style={style.errorText}>{errors.password}</Text>}
+
         <TouchableOpacity style={style.loginButton} onPress={handleSubmit}>
-          Login
+          <Text style={style.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
     </View>
