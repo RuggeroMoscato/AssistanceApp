@@ -27,14 +27,16 @@ app.post("/infopost", async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
   const arrayToken = refreshToken.split(".");
   const tokenPayload = JSON.parse(atob(arrayToken[1]));
+  const robotId = parseInt(req.query.ID, 10);
 
   try {
-    const q = `INSERT INTO Malfunctions(malfunction, createdAt, cretedBy) VALUES(@malfunction, @createdAt, @cretedBy)`;
+    const q = `INSERT INTO Malfunctions(robotID, malfunction, createdAt, cretedBy) VALUES(@robotID, @malfunction, @createdAt, @cretedBy)`;
     pool
       .request()
       .input("malfunction", sql.NVarChar, req.body.values.malfunction)
       .input("createdAt", sql.DateTime, timestamp)
       .input("cretedBy", sql.Int, tokenPayload.userId)
+      .input("robotId", sql.Int, robotId)
       .query(q);
     return res.status(200).send("malfunctions sended correctly");
   } catch (err) {
@@ -60,6 +62,21 @@ app.get("/robotsheet", async (req, res) => {
 
     const q =
       "SELECT serialNumber, name, mac, idUo, usernameHotspot, nameWifi, passwordWifi, idAnyDesk, passwordAnyDesk, software, firmware, phone, NMU, PIN, PUK, waterPerSecond, tank, servant  FROM Robot WHERE ID = @ID";
+    const id = parseInt(req.query.ID, 10);
+    const result = await pool.request().input("ID", sql.Int, id).query(q);
+    res.status(200).json(result.recordset);
+  } catch (err) {
+    console.log(err);
+    return res.status(500)
+  }
+});
+
+app.get("/malfunctions", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+
+    const q =
+      "SELECT malfunction, date  FROM Malfunctions WHERE ID = @ID";
     const id = parseInt(req.query.ID, 10);
     const result = await pool.request().input("ID", sql.Int, id).query(q);
     res.status(200).json(result.recordset);

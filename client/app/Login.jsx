@@ -42,6 +42,7 @@ const Login = () => {
       }
     } catch (error) {
       let errorMessage = "Errore durante il login";
+      console.log(error)
       switch (error.code) {
         case "auth/invalid-email":
           errorMessage = "Email non valida";
