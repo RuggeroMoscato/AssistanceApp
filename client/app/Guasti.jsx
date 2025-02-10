@@ -43,7 +43,7 @@ function RobotMalfunctions() {
         withCredentials: true,
       });
       if (res.status === 200) {
-        setMalfunctions(res.data);
+        setMalfunctions(res.data[0]);
       }
     } catch (err) {
       console.error(err);
