@@ -224,6 +224,9 @@ const style = StyleSheet.create({
     fontSize: 16,
     width: "40%",
   },
+  noDataText: {
+    paddingTop: "20px",
+  },
 
   picker: {
     flex: 1,

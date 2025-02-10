@@ -87,7 +87,10 @@ function RobotMalfunctions() {
           <Text style={style.labelRobot}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
-            onValueChange={(itemValue) => setSelectedRobot(itemValue)}
+            onValueChange={(itemValue) => {
+              setSelectedRobot(itemValue);
+              handleSubmit(itemValue);
+            }}
             style={style.picker}
           >
             {robotsList.map((robot) => (
@@ -99,10 +102,10 @@ function RobotMalfunctions() {
             ))}
           </Picker>
         </View>
-
+        {/* 
         <Button style={style.submitButton} onClick={handleFetchMalfunctions}>
           Cerca Guasti
-        </Button>
+        </Button> */}
 
         <View style={style.malfunctionList}>
           {malfunctions.length > 0 ? (

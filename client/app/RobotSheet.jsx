@@ -37,12 +37,12 @@ function RobotSheet() {
     };
     getData();
   }, []);
-  const handleSubmit = async () => {
+  const handleSubmit = async (value) => {
     try {
       const res = await axios.get(
         "http://localhost:3000/robotsheet",
         {
-          params: { ID: selectedRobot },
+          params: { ID: value },
         },
         {
           withCredentials: true,
@@ -89,7 +89,10 @@ function RobotSheet() {
           <Text style={style.labelRobot}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
-            onValueChange={(itemValue) => setSelectedRobot(itemValue)}
+            onValueChange={(itemValue) => {
+              setSelectedRobot(itemValue);
+              handleSubmit(itemValue);
+            }}
             style={style.picker}
           >
             {robotsList.map((robot) => (
@@ -153,9 +156,9 @@ function RobotSheet() {
           <Text style={style.labelRobot}>MAC address servitore: </Text>
           <Text>{robotInfo ? robotInfo.servant : null}</Text>
         </View>
-        <Button style={style.submitButton} onClick={handleSubmit}>
+        {/* <Button style={style.submitButton} onClick={handleSubmit}>
           Cerca
-        </Button>
+        </Button> */}
       </View>
     </ScrollView>
   );
