@@ -64,10 +64,6 @@ function RobotSheet() {
     );
     router.push("/Login");
   };
-  const handleChange = (e) => {
-    const selectedRobotId = e.value;
-    setSelectedRobot(selectedRobotId);
-  };
 
   // if (isLogged === false) return <Redirect href="/Login" />;
 
@@ -81,7 +77,7 @@ function RobotSheet() {
         <View style={style.navigation}>
           <Button
             onClick={() => {
-              router.push("/Post");
+              router.push("/Guasti");
             }}
           >
             <ArrowForwardIosIcon />

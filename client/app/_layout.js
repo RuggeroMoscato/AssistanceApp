@@ -12,18 +12,18 @@ export default function Index() {
       <Stack.Screen
         name="RobotSheet"
         component={RobotSheet}
-        options={{ title: "Robot sheet" }}
+        options={{ title: "Robot sheet",  headerShown: false }}ì
       />
       <Stack.Screen
         name="Login"
         component={Login}
         options={{ title: "Login" }}
       />
-      <Stack.Screen name="Post" component={Post} options={{ title: "Post" }} />
+      <Stack.Screen name="Post" component={Post} options={{ title: "Post",  headerShown: false }} />
       <Stack.Screen
         name="Guasti"
         component={Guasti}
-        options={{ title: "Guasti" }}
+        options={{ title: "Guasti",  headerShown: false }}
       />
     </Stack.Navigator>
   );

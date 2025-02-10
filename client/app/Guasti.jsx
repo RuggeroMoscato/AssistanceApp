@@ -4,7 +4,8 @@ import { Button } from "@mui/material";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import style from "./styles";
-import LogoutIcon from "@mui/icons-material/Logout";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { router } from "expo-router";
 
 function RobotMalfunctions() {
@@ -51,17 +52,34 @@ function RobotMalfunctions() {
 
   // Handle logout
   const handleLogout = async () => {
-    await axios.post("http://localhost:3000/logout", {}, { withCredentials: true });
+    await axios.post(
+      "http://localhost:3000/logout",
+      {},
+      { withCredentials: true }
+    );
     router.push("/Login");
   };
 
   return (
     <ScrollView style={style.AppRobot}>
       <View style={style.headerRobot}>
-        <Button onClick={handleLogout}>
-          <LogoutIcon style={style.logoutRobot} />
+        <Button
+          onClick={() => {
+            router.push("/RobotSheet");
+          }}
+        >
+          <ArrowBackIosIcon />
         </Button>
         <Text style={{ fontSize: 34 }}>Lista Guasti</Text>
+        <View style={style.navigation}>
+          <Button
+            onClick={() => {
+              router.push("/Post");
+            }}
+          >
+            <ArrowForwardIosIcon />
+          </Button>
+        </View>
       </View>
 
       <View style={style.containerRobot}>
@@ -73,7 +91,11 @@ function RobotMalfunctions() {
             style={style.picker}
           >
             {robotsList.map((robot) => (
-              <Picker.Item key={robot.value} label={robot.label} value={robot.value} />
+              <Picker.Item
+                key={robot.value}
+                label={robot.label}
+                value={robot.value}
+              />
             ))}
           </Picker>
         </View>
@@ -87,7 +109,8 @@ function RobotMalfunctions() {
             malfunctions.map((malfunction, index) => (
               <View key={index} style={style.malfunctionItem}>
                 <Text style={style.malfunctionText}>
-                  {malfunction.issue} - <Text style={style.dateText}>{malfunction.date}</Text>
+                  {malfunction.issue} -{" "}
+                  <Text style={style.dateText}>{malfunction.date}</Text>
                 </Text>
               </View>
             ))
