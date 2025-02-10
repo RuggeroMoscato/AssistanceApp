@@ -36,7 +36,7 @@ function RobotMalfunctions() {
   }, []);
 
   // Fetch malfunctions when a robot is selected
-  const handleFetchMalfunctions = async () => {
+  const handleSubmit = async () => {
     try {
       const res = await axios.get("http://localhost:3000/malfunctions", {
         params: { ID: selectedRobot },
@@ -102,10 +102,7 @@ function RobotMalfunctions() {
             ))}
           </Picker>
         </View>
-        {/* 
-        <Button style={style.submitButton} onClick={handleFetchMalfunctions}>
-          Cerca Guasti
-        </Button> */}
+        
 
         <View style={style.malfunctionList}>
           {malfunctions.length > 0 ? (
