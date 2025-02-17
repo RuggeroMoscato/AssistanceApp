@@ -16,10 +16,6 @@ function RobotSheet() {
       try {
         const res = await axios.get(
           "http://localhost:3000/robots",
-          {},
-          {
-            withCredentials: true,
-          }
         );
         if (res.status === 200) {
           setRobotsList(
@@ -43,9 +39,6 @@ function RobotSheet() {
         {
           params: { ID: value },
         },
-        {
-          withCredentials: true,
-        }
       );
       if (res.status === 200) {
         setRobotInfo(res.data[0]);
@@ -56,11 +49,6 @@ function RobotSheet() {
     }
   };
   const handleLogout = async () => {
-    await axios.post(
-      "http://localhost:3000/logout",
-      {},
-      { withCredentials: true }
-    );
     router.push("/");
   };
 

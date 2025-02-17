@@ -15,9 +15,7 @@ function RobotMalfunctions() {
   useEffect(() => {
     const fetchRobots = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/robots", {
-          withCredentials: true,
-        });
+        const res = await axios.get("http://localhost:3000/robots");
         if (res.status === 200) {
           setRobotsList(
             res.data.map((robot) => ({
@@ -33,12 +31,10 @@ function RobotMalfunctions() {
     fetchRobots();
   }, []);
 
-
   const handleSubmit = async () => {
     try {
       const res = await axios.get("http://localhost:3000/malfunctions", {
         params: { ID: selectedRobot },
-        withCredentials: true,
       });
       if (res.status === 200) {
         setMalfunctions(res.data[0]);
@@ -49,11 +45,6 @@ function RobotMalfunctions() {
   };
 
   const handleLogout = async () => {
-    await axios.post(
-      "http://localhost:3000/logout",
-      {},
-      { withCredentials: true }
-    );
     router.push("/");
   };
 
@@ -88,7 +79,6 @@ function RobotMalfunctions() {
             ))}
           </Picker>
         </View>
-        
 
         <View style={style.malfunctionList}>
           {malfunctions.length > 0 ? (

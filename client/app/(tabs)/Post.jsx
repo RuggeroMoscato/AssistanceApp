@@ -18,10 +18,6 @@ function Info() {
       try {
         const res = await axios.get(
           "http://localhost:3000/robots",
-          {},
-          {
-            withCredentials: true,
-          }
         );
         if (res.status === 200) {
           setRobotsList(
@@ -45,9 +41,6 @@ function Info() {
         const res = await axios.post(
           "http://localhost:3000/infopost",
           { params: { values: values, ID: selectedRobot } },
-          {
-            withCredentials: true,
-          }
         );
         if (res.status === 200) {
           notifySuccess();
@@ -76,11 +69,7 @@ function Info() {
   });
 
   const handleLogout = async () => {
-    await axios.post(
-      "http://localhost:3000/logout",
-      {},
-      { withCredentials: true }
-    );
+
     router.push("/");
   };
 
