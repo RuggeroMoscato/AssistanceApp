@@ -55,7 +55,7 @@ function RobotMalfunctions() {
       {},
       { withCredentials: true }
     );
-    router.push("/Login");
+    router.push("/");
   };
 
   return (

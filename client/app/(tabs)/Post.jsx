@@ -95,7 +95,7 @@ function Info() {
       {},
       { withCredentials: true }
     );
-    router.push("Login");
+    router.push("/");
   };
 
   // if (isLogged === false) return <Redirect href="/Login" />;
