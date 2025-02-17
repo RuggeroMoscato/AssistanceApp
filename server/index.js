@@ -4,12 +4,8 @@ const express = require("express");
 const sql = require("mssql");
 const cors = require("cors");
 const app = express();
-const CryptoJS = require("crypto-js");
-const jwt = require("jsonwebtoken");
 const config = require("./config");
-const cookieParser = require("cookie-parser");
 app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:8081",
