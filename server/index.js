@@ -17,8 +17,6 @@ app.use(
   })
 );
 
-const verifyToken = require("./Middlewares/verifyToken");
-
 app.post("/infopost", async (req, res) => {
   const pool = await sql.connect(config);
   const date = new Date();
