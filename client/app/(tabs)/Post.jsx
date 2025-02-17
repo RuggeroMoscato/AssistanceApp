@@ -1,12 +1,10 @@
 import style from "../styles";
 import axios from "axios";
 import * as Yup from "yup";
-import useNotistack from "../../hooks/useNotistack";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useFormik } from "formik";
 import { ScrollView, Text, View } from "react-native";
 import { Button, TextField } from "@mui/material";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
@@ -14,18 +12,6 @@ import { useEffect, useState } from "react";
 function Info() {
   const [selectedRobot, setSelectedRobot] = useState("");
   const [robotsList, setRobotsList] = useState([]);
-  const { notify: notifySuccess } = useNotistack(
-    "Info inserite con successo",
-    "success"
-  );
-  const { notify: notifyError } = useNotistack(
-    "Errore, info non inserite",
-    "error"
-  );
-  const { notify: notifyErrorSame } = useNotistack(
-    "Errore, i valori non possono essere uguali",
-    "error"
-  );
 
   useEffect(() => {
     const getData = async () => {

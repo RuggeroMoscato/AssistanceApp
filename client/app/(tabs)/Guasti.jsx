@@ -12,7 +12,6 @@ function RobotMalfunctions() {
   const [malfunctions, setMalfunctions] = useState([]);
   const [selectedRobot, setSelectedRobot] = useState("");
 
-  // Get list of robots from database
   useEffect(() => {
     const fetchRobots = async () => {
       try {

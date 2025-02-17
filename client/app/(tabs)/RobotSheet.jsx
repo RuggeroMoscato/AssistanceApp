@@ -146,9 +146,6 @@ function RobotSheet() {
           <Text style={style.labelRobot}>MAC address servitore: </Text>
           <Text>{robotInfo ? robotInfo.servant : null}</Text>
         </View>
-        {/* <Button style={style.submitButton} onClick={handleSubmit}>
-          Cerca
-        </Button> */}
       </View>
     </ScrollView>
   );
