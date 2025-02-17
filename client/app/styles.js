@@ -66,18 +66,6 @@ const style = StyleSheet.create({
     justifyContent: "flex-end",
     fontSize: 12,
   },
-  // submitButton: {
-  //   fontSize: 18,
-  //   backgroundColor: "rgb(52, 209, 191)",
-  //   borderRadius: 8,
-  //   color: "white",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   width: "46%",
-  //   padding: 18,
-  //   height: 20,
-  //   borderWidth: 0,
-  // },
   loginPage: {
     flex: 1,
     backgroundColor: "#f0f4f8",
@@ -94,8 +82,8 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 20,
-    elevation: 4, // Adds a subtle shadow on Android
-    shadowColor: "#000", // Adds a subtle shadow on iOS
+    elevation: 4,
+    shadowColor: "#000", 
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 5,

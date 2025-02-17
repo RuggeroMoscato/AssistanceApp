@@ -74,11 +74,10 @@ app.get("/robotsheet", async (req, res) => {
 app.get("/malfunctions", async (req, res) => {
   try {
     const pool = await sql.connect(config);
-
     const q =
-      "SELECT malfunction, date  FROM Malfunctions WHERE ID = @ID";
+      "SELECT malfunction, date FROM Malfunctions WHERE ID = @ID";
     const id = parseInt(req.query.ID, 10);
-    const result = await pool.request().input("ID", sql.Int, id).query(q);
+    const result = await pool.request().input("robotId", sql.Int, id).query(q);
     res.status(200).json(result.recordset);
   } catch (err) {
     console.log(err);

@@ -34,7 +34,7 @@ function RobotMalfunctions() {
     fetchRobots();
   }, []);
 
-  // Get malfunctions from database when a robot is selected
+
   const handleSubmit = async () => {
     try {
       const res = await axios.get("http://localhost:3000/malfunctions", {
