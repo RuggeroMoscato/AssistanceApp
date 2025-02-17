@@ -1,5 +1,4 @@
 import logo from "../assets/logo_copernico.png";
-import useNotistack from "../hooks/useNotistack";
 import { useFormik } from "formik";
 import { Button, Image, Text, TextInput, View } from "react-native";
 import style from "./styles";
@@ -88,7 +87,7 @@ const Login = () => {
         {touched.password && errors.password && <Text style={style.errorText}>{errors.password}</Text>}
 
         <TouchableOpacity style={style.loginButton} onPress={handleSubmit}>
-          <Text style={style.buttonText}>Login</Text>
+          <Text style={{color:"white", fontWeight:"bold"}}>Login</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -3,17 +3,16 @@ import { ScrollView, Text, View } from "react-native";
 import { Button } from "@mui/material";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
-import style from "./styles";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import style from "../styles";
 import { router } from "expo-router";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 function RobotMalfunctions() {
   const [robotsList, setRobotsList] = useState([]);
   const [malfunctions, setMalfunctions] = useState([]);
   const [selectedRobot, setSelectedRobot] = useState("");
 
-  // Fetch list of robots
+  // Get list of robots from database
   useEffect(() => {
     const fetchRobots = async () => {
       try {
@@ -35,7 +34,7 @@ function RobotMalfunctions() {
     fetchRobots();
   }, []);
 
-  // Fetch malfunctions when a robot is selected
+  // Get malfunctions from database when a robot is selected
   const handleSubmit = async () => {
     try {
       const res = await axios.get("http://localhost:3000/malfunctions", {
@@ -50,7 +49,6 @@ function RobotMalfunctions() {
     }
   };
 
-  // Handle logout
   const handleLogout = async () => {
     await axios.post(
       "http://localhost:3000/logout",
@@ -63,21 +61,10 @@ function RobotMalfunctions() {
   return (
     <ScrollView style={style.AppRobot}>
       <View style={style.headerRobot}>
-        <Button
-          onClick={() => {
-            router.push("/RobotSheet");
-          }}
-        >
-          <ArrowBackIosIcon />
-        </Button>
         <Text style={{ fontSize: 34 }}>Lista Guasti</Text>
         <View style={style.navigation}>
-          <Button
-            onClick={() => {
-              router.push("/Post");
-            }}
-          >
-            <ArrowForwardIosIcon />
+          <Button onClick={handleLogout}>
+            <LogoutIcon style={style.logout} />
           </Button>
         </View>
       </View>

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import style from "./styles";
+import style from "../styles";
 import axios from "axios";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { ScrollView, Text, View } from "react-native";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Redirect, router } from "expo-router";
 import { Button } from "@mui/material";
 import { Picker } from "@react-native-picker/picker";
@@ -70,19 +69,10 @@ function RobotSheet() {
   return (
     <ScrollView style={style.AppRobot}>
       <View style={style.headerRobot}>
+        <Text style={{ fontSize: "34px" }}>Scheda del Robot</Text>
         <Button onClick={handleLogout}>
           <LogoutIcon style={style.logoutRobot} />
         </Button>
-        <Text style={{ fontSize: "34px" }}>Scheda del Robot</Text>
-        <View style={style.navigation}>
-          <Button
-            onClick={() => {
-              router.push("/Guasti");
-            }}
-          >
-            <ArrowForwardIosIcon />
-          </Button>
-        </View>
       </View>
       <View style={style.containerRobot}>
         <View style={style.infoRobotSheet}>

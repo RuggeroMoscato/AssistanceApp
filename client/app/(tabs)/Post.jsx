@@ -1,7 +1,7 @@
-import style from "./styles";
+import style from "../styles";
 import axios from "axios";
 import * as Yup from "yup";
-import useNotistack from "../hooks/useNotistack";
+import useNotistack from "../../hooks/useNotistack";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useFormik } from "formik";
 import { ScrollView, Text, View } from "react-native";
@@ -103,13 +103,6 @@ function Info() {
   return (
     <ScrollView style={style.App}>
       <View style={style.header}>
-        <Button
-          onClick={() => {
-            router.push("/Guasti");
-          }}
-        >
-          <ArrowBackIosIcon />
-        </Button>
         <Text style={{ fontSize: "34px" }}>Inserimento Guasti</Text>
         <View style={style.navigation}>
           <Button onClick={handleLogout}>
