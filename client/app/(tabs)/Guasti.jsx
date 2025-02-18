@@ -3,7 +3,7 @@ import { ScrollView, Text, View } from "react-native";
 import { Button } from "@mui/material";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
-import style from "../styles";
+import styles from "../styles";
 import { router } from "expo-router";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -49,26 +49,26 @@ function RobotMalfunctions() {
   };
 
   return (
-    <ScrollView style={style.AppRobot}>
-      <View style={style.headerRobot}>
+    <ScrollView style={styles.AppRobot}>
+      <View style={styles.headerRobot}>
         <Text style={{ fontSize: 34 }}>Lista Guasti</Text>
-        <View style={style.navigation}>
+        <View style={styles.navigation}>
           <Button onClick={handleLogout}>
-            <LogoutIcon style={style.logout} />
+            <LogoutIcon style={styles.logout} />
           </Button>
         </View>
       </View>
 
-      <View style={style.containerRobot}>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Seleziona il robot:</Text>
+      <View style={styles.containerRobot}>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
             onValueChange={(itemValue) => {
               setSelectedRobot(itemValue);
               handleSubmit(itemValue);
             }}
-            style={style.picker}
+            style={styles.picker}
           >
             {robotsList.map((robot) => (
               <Picker.Item
@@ -80,18 +80,18 @@ function RobotMalfunctions() {
           </Picker>
         </View>
 
-        <View style={style.malfunctionList}>
+        <View style={styles.malfunctionList}>
           {malfunctions.length > 0 ? (
             malfunctions.map((malfunction, index) => (
-              <View key={index} style={style.malfunctionItem}>
-                <Text style={style.malfunctionText}>
+              <View key={index} style={styles.malfunctionItem}>
+                <Text style={styles.malfunctionText}>
                   {malfunction.issue} -{" "}
-                  <Text style={style.dateText}>{malfunction.date}</Text>
+                  <Text style={styles.dateText}>{malfunction.date}</Text>
                 </Text>
               </View>
             ))
           ) : (
-            <Text style={style.noDataText}>Nessun guasto trovato</Text>
+            <Text style={styles.noDataText}>Nessun guasto trovato</Text>
           )}
         </View>
       </View>

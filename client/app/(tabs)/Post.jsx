@@ -1,4 +1,4 @@
-import style from "../styles";
+import styles from "../styles";
 import axios from "axios";
 import * as Yup from "yup";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -16,9 +16,7 @@ function Info() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:3000/robots",
-        );
+        const res = await axios.get("http://localhost:3000/robots");
         if (res.status === 200) {
           setRobotsList(
             res.data.map((robot) => ({
@@ -38,10 +36,9 @@ function Info() {
   const infoPost = async (values) => {
     if (values.mac !== values.servant) {
       try {
-        const res = await axios.post(
-          "http://localhost:3000/infopost",
-          { params: { values: values, ID: selectedRobot } },
-        );
+        const res = await axios.post("http://localhost:3000/infopost", {
+          params: { values: values, ID: selectedRobot },
+        });
         if (res.status === 200) {
           notifySuccess();
         }
@@ -69,29 +66,27 @@ function Info() {
   });
 
   const handleLogout = async () => {
-
     router.push("/");
   };
 
-  // if (isLogged === false) return <Redirect href="/Login" />;
 
   return (
-    <ScrollView style={style.App}>
-      <View style={style.header}>
-        <Text style={{ fontSize: "34px" }}>Inserimento Guasti</Text>
-        <View style={style.navigation}>
+    <ScrollView style={styles.App}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Inserimento Guasti</Text>
+        <View style={styles.navigation}>
           <Button onClick={handleLogout}>
-            <LogoutIcon style={style.logout} />
+            <LogoutIcon style={styles.logout} />
           </Button>
         </View>
       </View>
-      <View style={style.container}>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Seleziona il robot:</Text>
+      <View style={styles.container}>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
             onValueChange={(itemValue) => setSelectedRobot(itemValue)}
-            style={style.picker}
+            style={styles.picker}
           >
             {robotsList.map((robot) => (
               <Picker.Item
@@ -108,11 +103,11 @@ function Info() {
           id="malfunction"
           name="malfunction"
           type="text"
-          style={style.infoInput}
+          style={styles.infoInput}
           onChange={handleChange}
           value={values.malfunction}
         />
-        <Button style={style.submitButton} onClick={handleSubmit}>
+        <Button style={styles.submitButton} onClick={handleSubmit}>
           SUBMIT
         </Button>
       </View>

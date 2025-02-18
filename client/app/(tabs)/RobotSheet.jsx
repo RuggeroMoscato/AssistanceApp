@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import style from "../styles";
+import styles from "../styles";
 import axios from "axios";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { ScrollView, Text, View } from "react-native";
@@ -52,26 +52,26 @@ function RobotSheet() {
     router.push("/");
   };
 
-  // if (isLogged === false) return <Redirect href="/Login" />;
+
 
   return (
-    <ScrollView style={style.AppRobot}>
-      <View style={style.headerRobot}>
-        <Text style={{ fontSize: "34px" }}>Scheda del Robot</Text>
+    <ScrollView style={styles.AppRobot}>
+      <View style={styles.headerRobot}>
+        <Text style={styles.title}>Scheda del Robot</Text>
         <Button onClick={handleLogout}>
-          <LogoutIcon style={style.logoutRobot} />
+          <LogoutIcon style={styles.logoutRobot} />
         </Button>
       </View>
-      <View style={style.containerRobot}>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Seleziona il robot:</Text>
+      <View style={styles.containerRobot}>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
             onValueChange={(itemValue) => {
               setSelectedRobot(itemValue);
               handleSubmit(itemValue);
             }}
-            style={style.picker}
+            style={styles.picker}
           >
             {robotsList.map((robot) => (
               <Picker.Item
@@ -82,56 +82,56 @@ function RobotSheet() {
             ))}
           </Picker>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>S/N Robot: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>S/N Robot:</Text>
           <Text>{robotInfo ? robotInfo.serialNumber : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Mac Address Robot: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Mac Address Robot:</Text>
           <Text>{robotInfo ? robotInfo.mac : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Unità Operativa: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Unità Operativa:</Text>
           <Text>{robotInfo ? robotInfo.idUo : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Username Hotspot: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Username Hotspot:</Text>
           <Text>{robotInfo ? robotInfo.usernameHotspot : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Nome Rete WiFi: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Nome Rete WiFi:</Text>
           <p>{robotInfo ? robotInfo.nameWifi : null}</p>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Password WiFi: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Password WiFi:</Text>
           <Text>{robotInfo ? robotInfo.passwordWifi : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>ID Utente AnyDesk: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>ID Utente AnyDesk:</Text>
           <Text>{robotInfo ? robotInfo.idAnyDesk : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Password AnyDesk: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Password AnyDesk:</Text>
           <Text>{robotInfo ? robotInfo.passwordAnyDesk : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Versione Software: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Versione Software:</Text>
           <Text>{robotInfo ? robotInfo.software : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Versione Firmware: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Versione Firmware:</Text>
           <Text>{robotInfo ? robotInfo.firmware : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Capacità serbatoio: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Capacità serbatoio:</Text>
           <Text>{robotInfo ? robotInfo.tank : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>Acqua al secondo: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Acqua al secondo:</Text>
           <Text>{robotInfo ? robotInfo.waterPerSecond : null}</Text>
         </View>
-        <View style={style.infoRobotSheet}>
-          <Text style={style.labelRobot}>MAC address servitore: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>MAC address servitore:</Text>
           <Text>{robotInfo ? robotInfo.servant : null}</Text>
         </View>
       </View>

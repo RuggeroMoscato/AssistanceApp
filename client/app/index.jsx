@@ -1,15 +1,17 @@
 import logo from "../assets/logo_copernico.png";
 import { useFormik } from "formik";
 import { Button, Image, Text, TextInput, View } from "react-native";
-import style from "./styles";
+import styles from "./styles";
 import * as Yup from "yup";
 import { TouchableOpacity } from "react-native";
 import { Redirect, router } from "expo-router";
 import { useState } from "react";
 import { authInstance } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [isLogged, setIsLogged] = useState(false);
+
 
   const { handleChange, values, handleSubmit, touched, errors } = useFormik({
     initialValues: {
@@ -30,7 +32,8 @@ const Login = () => {
 
   const handleLogin = async (email, password) => { 
     try {
-      const userCredential = await authInstance.signInWithEmailAndPassword(
+      const userCredential = await signInWithEmailAndPassword(
+        authInstance,
         email,
         password 
       );
@@ -63,30 +66,30 @@ const Login = () => {
   if (isLogged) return <Redirect href="/RobotSheet" />;
 
   return (
-    <View style={style.loginPage}>
-      <View style={style.loginWidget}>
-        <Image source={logo} resizeMode="contain" style={style.image} />
+    <View style={styles.loginPage}>
+      <View style={styles.loginWidget}>
+        <Image source={logo} resizeMode="contain" style={styles.image} />
         <TextInput
           placeholder="Email"
-          style={style.loginInput}
+          style={styles.loginInput}
           onChangeText={handleChange('email')} 
           value={values.email}
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        {touched.email && errors.email && <Text style={style.errorText}>{errors.email}</Text>}
+        {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
         
         <TextInput
           placeholder="Password"
-          style={style.loginInput}
+          style={styles.loginInput}
           onChangeText={handleChange('password')}
           value={values.password}
           secureTextEntry={true} 
           autoCapitalize="none"
         />
-        {touched.password && errors.password && <Text style={style.errorText}>{errors.password}</Text>}
+        {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-        <TouchableOpacity style={style.loginButton} onPress={handleSubmit}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
           <Text style={{color:"white", fontWeight:"bold"}}>Login</Text>
         </TouchableOpacity>
       </View>

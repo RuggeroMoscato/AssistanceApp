@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   App: {
     flex: 1,
     backgroundColor: "#f0f4f8",
@@ -19,6 +19,7 @@ const style = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  title: { fontSize: 34, },
   navigation: {
     flexDirection: "row",
     gap: 10,
@@ -83,7 +84,7 @@ const style = StyleSheet.create({
     justifyContent: "center",
     gap: 20,
     elevation: 4,
-    shadowColor: "#000", 
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
@@ -220,7 +221,7 @@ const style = StyleSheet.create({
     width: "40%",
   },
   noDataText: {
-    paddingTop: "20px",
+    paddingTop: 20,
   },
 
   picker: {
@@ -234,4 +235,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default style;
+export default styles;
