@@ -5,7 +5,6 @@ const sql = require("mssql");
 const cors = require("cors");
 const app = express();
 const config = require("./config");
-const configMalf = require("./configMalf")
 app.use(express.json());
 app.use(
   cors({
@@ -15,7 +14,7 @@ app.use(
 );
 
 app.post("/infopost", async (req, res) => {
-  const pool = await sql.connect(configMalf);
+  const pool = await sql.connect(config);
   const date = new Date();
   const offsetMs = date.getTimezoneOffset() * 60 * 1000;
   const timestamp = new Date(date.getTime() - offsetMs).toISOString();
@@ -64,7 +63,7 @@ app.get("/robotsheet", async (req, res) => {
 
 app.get("/malfunctions", async (req, res) => {
   try {
-    const pool = await sql.connect(configMalf);
+    const pool = await sql.connect(config);
     const q =
       "SELECT guasto, data FROM Guasti WHERE idRobot = @idRobot";
     const id = parseInt(req.query.ID, 10);
