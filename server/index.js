@@ -22,7 +22,7 @@ app.post("/infopost", async (req, res) => {
   const robotId = parseInt(req.query.robotId, 10);
 
   try {
-    const q = `INSERT INTO Malfunctions(idRobot, guasto, data) VALUES(@idRobot, @guasto, @data)`;
+    const q = `INSERT INTO Guasti(idRobot, guasto, data) VALUES(@idRobot, @guasto, @data)`;
     pool
       .request()
       .input("guasto", sql.NVarChar, req.body.values.malfunction)
@@ -66,9 +66,9 @@ app.get("/malfunctions", async (req, res) => {
   try {
     const pool = await sql.connect(configMalf);
     const q =
-      "SELECT malfunction, date FROM Malfunctions WHERE robotId = @robotId";
+      "SELECT guasto, data FROM Guasti WHERE idRobot = @idRobot";
     const id = parseInt(req.query.ID, 10);
-    const result = await pool.request().input("robotId", sql.Int, id).query(q);
+    const result = await pool.request().input("idRobot", sql.Int, id).query(q);
     res.status(200).json(result.recordset);
   } catch (err) {
     console.log(err);
