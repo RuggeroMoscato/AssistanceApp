@@ -5,6 +5,7 @@ const sql = require("mssql");
 const cors = require("cors");
 const app = express();
 const config = require("./config");
+const configMalf = require("./configMalf")
 app.use(express.json());
 app.use(
   cors({
@@ -14,23 +15,19 @@ app.use(
 );
 
 app.post("/infopost", async (req, res) => {
-  const pool = await sql.connect(config);
+  const pool = await sql.connect(configMalf);
   const date = new Date();
   const offsetMs = date.getTimezoneOffset() * 60 * 1000;
   const timestamp = new Date(date.getTime() - offsetMs).toISOString();
-  const refreshToken = req.cookies.refreshToken;
-  const arrayToken = refreshToken.split(".");
-  const tokenPayload = JSON.parse(atob(arrayToken[1]));
-  const robotId = parseInt(req.query.ID, 10);
+  const robotId = parseInt(req.query.robotId, 10);
 
   try {
-    const q = `INSERT INTO Malfunctions(robotID, malfunction, createdAt, cretedBy) VALUES(@robotID, @malfunction, @createdAt, @cretedBy)`;
+    const q = `INSERT INTO Malfunctions(idRobot, guasto, data) VALUES(@idRobot, @guasto, @data)`;
     pool
       .request()
-      .input("malfunction", sql.NVarChar, req.body.values.malfunction)
-      .input("createdAt", sql.DateTime, timestamp)
-      .input("cretedBy", sql.Int, tokenPayload.userId)
-      .input("robotId", sql.Int, robotId)
+      .input("guasto", sql.NVarChar, req.body.values.malfunction)
+      .input("data", sql.Date, timestamp)
+      .input("idRobot", sql.Int, robotId)
       .query(q);
     return res.status(200).send("malfunctions sended correctly");
   } catch (err) {
@@ -67,7 +64,7 @@ app.get("/robotsheet", async (req, res) => {
 
 app.get("/malfunctions", async (req, res) => {
   try {
-    const pool = await sql.connect(config);
+    const pool = await sql.connect(configMalf);
     const q =
       "SELECT malfunction, date FROM Malfunctions WHERE robotId = @robotId";
     const id = parseInt(req.query.ID, 10);

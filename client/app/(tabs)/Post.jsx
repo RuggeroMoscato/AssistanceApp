@@ -33,24 +33,14 @@ function Info() {
     getData();
   }, []);
 
-  const infoPost = async (values) => {
-    if (values.mac !== values.servant) {
+  const infoPost = async (values, robotId) => {
       try {
         const res = await axios.post("http://localhost:3000/infopost", {
-          params: { values: values, ID: selectedRobot },
+          params: { values: values, robotId: robotId },
         });
-        if (res.status === 200) {
-          notifySuccess();
-        }
       } catch (err) {
         console.log(err);
-        if (err.response && err.response.status === 400) {
-          notifyError();
-        }
       }
-    } else {
-      notifyErrorSame();
-    }
   };
 
   const { handleChange, values, handleSubmit, touched, errors } = useFormik({
@@ -61,7 +51,7 @@ function Info() {
       malfunction: Yup.string().required("Descrizione del guasto richiesta"),
     }),
     onSubmit: (values) => {
-      infoPost(values);
+      infoPost(values, selectedRobot);
     },
   });
 
@@ -102,6 +92,7 @@ function Info() {
           multiline
           id="malfunction"
           name="malfunction"
+          title="malfunction"
           type="text"
           style={styles.infoInput}
           onChange={handleChange}

@@ -12,4 +12,6 @@ const config = {
     encrypt: false,
   },
 };
-module.exports = config;
+
+
+module.exports = config
