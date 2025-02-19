@@ -34,31 +34,6 @@ app.post("/infopost", async (req, res) => {
   }
 });
 
-app.post("/typePost", async (req, res) => {
-  const pool = await sql.connect(config);
-
-  try {
-    const checkType =
-    "SELECT COUNT(*) AS count FROM Categorie WHERE type = @type";
-    const checkTypeResult = await pool
-    .request()
-    .input("type", sql.NVarChar, req.body.values.type)
-    .query(checkType);
-  if (checkTypeResult.recordset[0].count > 0) {
-    return res.status(403).json();
-  }
-    const q = `INSERT INTO Categorie(type) VALUES (@type)`;
-    pool
-      .request()
-      .input("type", sql.NVarChar, req.body.values.type)
-      .query(q);
-    return res.status(200).send("New type sended correctly");
-  } catch (err) {
-    console.log(err)
-    return res.status(500);
-    
-  }
-});
 
 app.get("/robots", async (req, res) => {
   try {
@@ -110,6 +85,58 @@ app.get("/types", async (req, res) => {
   } catch (err) {
     console.log(err)
    return  res.status(500);
+  }
+});
+
+app.post("/typePost", async (req, res) => {
+  const pool = await sql.connect(config);
+
+  try {
+    const checkType =
+    "SELECT COUNT(*) AS count FROM Categorie WHERE type = @type";
+    const checkTypeResult = await pool
+    .request()
+    .input("type", sql.NVarChar, req.body.values.type)
+    .query(checkType);
+  if (checkTypeResult.recordset[0].count > 0) {
+    return res.status(403).json();
+  }
+    const q = `INSERT INTO Categorie(type) VALUES (@type)`;
+    pool
+      .request()
+      .input("type", sql.NVarChar, req.body.values.type)
+      .query(q);
+    return res.status(200).send("New type sended correctly");
+  } catch (err) {
+    console.log(err)
+    return res.status(500);
+    
+  }
+});
+
+app.post("/typeDelete", async (req, res) => {
+  const pool = await sql.connect(config);
+  const id = parseInt(req.body.ID, 10);
+  try {
+    const checkIdType =
+    "SELECT COUNT(*) AS count FROM Guasti WHERE idType = @idType";
+    const checkIdTypeResult = await pool
+    .request()
+    .input("idType", sql.NVarChar, id)
+    .query(checkIdType);
+  if (checkIdTypeResult.recordset[0].count > 0) {
+    return res.status(403).json();
+  }
+    const q = `DELETE FROM Categorie WHERE ID = @ID`;
+    pool
+      .request()
+      .input("ID", sql.NVarChar, id)
+      .query(q);
+    return res.status(200).send("Type deleted correctly");
+  } catch (err) {
+    console.log(err)
+    return res.status(500);
+    
   }
 });
 
