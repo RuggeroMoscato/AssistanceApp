@@ -117,14 +117,31 @@ app.post("/typeDelete", async (req, res) => {
       "SELECT COUNT(*) AS count FROM Guasti WHERE idType = @idType";
     const checkIdTypeResult = await pool
       .request()
-      .input("idType", sql.NVarChar, id)
+      .input("idType", sql.Int, id)
       .query(checkIdType);
     if (checkIdTypeResult.recordset[0].count > 0) {
       return res.status(403).json();
     }
     const q = `DELETE FROM Categorie WHERE ID = @ID`;
-    pool.request().input("ID", sql.NVarChar, id).query(q);
+    pool.request().input("ID", sql.Int, id).query(q);
     return res.status(200).send("Type deleted correctly");
+  } catch (err) {
+    console.log(err);
+    return res.status(500);
+  }
+});
+
+app.post("/typeModify", async (req, res) => {
+  const pool = await sql.connect(config);
+  const id = parseInt(req.body.ID, 10);
+  try {
+    const q = `UPDATE Categorie SET type = @type WHERE ID = @ID;`;
+    pool
+      .request()
+      .input("type", sql.NVarChar, req.body.values.type)
+      .input("ID", sql.Int, id)
+      .query(q);
+    return res.status(200).send("Type modified successfully");
   } catch (err) {
     console.log(err);
     return res.status(500);

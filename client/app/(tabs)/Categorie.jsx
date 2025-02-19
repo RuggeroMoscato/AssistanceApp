@@ -24,7 +24,7 @@ function Info() {
               value: type.ID,
             }))
           );
-        } 
+        }
       } catch (err) {
         console.log(err);
       }
@@ -41,10 +41,20 @@ function Info() {
       console.log(err);
     }
   };
-  const modifyPost = async (values) => {
+  const modifyPost = async (values, ID) => {
     try {
       const res = await axios.post("http://localhost:3000/typeModify", {
         values: values,
+        ID: ID,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const deletePost = async (values, ID) => {
+    try {
+      const res = await axios.post("http://localhost:3000/typeDelete", {
+        ID: ID,
       });
     } catch (err) {
       console.log(err);
@@ -67,7 +77,6 @@ function Info() {
     router.push("/");
   };
 
-
   return (
     <ScrollView style={styles.App}>
       <View style={styles.header}>
@@ -79,7 +88,6 @@ function Info() {
         </View>
       </View>
       <View style={styles.container}>
-  
         <Text>Nuova Categoria: </Text>
         <TextField
           multiline
@@ -121,7 +129,10 @@ function Info() {
           onChange={handleChange}
           value={values.type}
         />
-        <Button style={styles.submitButton} onClick={handleSubmit}>
+        <Button
+          style={styles.submitButton}
+          onClick={modifyPost(values, selectedType)}
+        >
           Modifica
         </Button>
       </View>
