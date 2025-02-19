@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 function Info() {
   const [selectedRobot, setSelectedRobot] = useState("");
   const [robotsList, setRobotsList] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [typesList, setTypeList] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -32,11 +34,31 @@ function Info() {
     };
     getData();
   }, []);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/types");
+        if (res.status === 200) {
+          setTypeList(
+            res.data.map((type) => ({
+              Text: type.type,
+              value: type.ID,
+            }))
+          );
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getData();
+  }, []);
 
-  const infoPost = async (values, robotId) => {
+  const infoPost = async (values, robotId, typeId) => {
     try {
       const res = await axios.post("http://localhost:3000/infopost", {
-        values: values, robotId: robotId ,
+        values: values,
+        robotId: robotId,
+        typeId: typeId,
       });
     } catch (err) {
       console.log(err);
@@ -51,14 +73,13 @@ function Info() {
       malfunction: Yup.string().required("Descrizione del guasto richiesta"),
     }),
     onSubmit: (values) => {
-      infoPost(values, selectedRobot);
+      infoPost(values, selectedRobot, selectedType);
     },
   });
 
   const handleLogout = async () => {
     router.push("/");
   };
-
 
   return (
     <ScrollView style={styles.App}>
@@ -87,7 +108,23 @@ function Info() {
             ))}
           </Picker>
         </View>
-        <Text>Guasto: </Text>
+        <View style={styles.infoRobotSheet}>
+          <Text style={styles.labelRobot}>Seleziona la categoria:</Text>
+          <Picker
+            selectedValue={selectedType}
+            onValueChange={(itemValue) => setSelectedType(itemValue)}
+            style={styles.picker}
+          >
+            {typesList.map((type) => (
+              <Picker.Item
+                key={type.value}
+                label={type.Text}
+                value={type.value}
+              />
+            ))}
+          </Picker>
+        </View>
+        <Text>Inserisci il Guasto: </Text>
         <TextField
           multiline
           id="malfunction"
