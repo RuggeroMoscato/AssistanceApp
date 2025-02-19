@@ -18,8 +18,7 @@ app.post("/infopost", async (req, res) => {
   const date = new Date();
   const offsetMs = date.getTimezoneOffset() * 60 * 1000;
   const timestamp = new Date(date.getTime() - offsetMs).toISOString();
-  const robotId = parseInt(req.query.robotId, 10);
-
+  const robotId = parseInt(req.body.robotId, 10);
   try {
     const q = `INSERT INTO Guasti(idRobot, guasto, data) VALUES(@idRobot, @guasto, @data)`;
     pool
@@ -31,13 +30,40 @@ app.post("/infopost", async (req, res) => {
     return res.status(200).send("malfunctions sended correctly");
   } catch (err) {
     return res.status(500);
+    
+  }
+});
+
+app.post("/typePost", async (req, res) => {
+  const pool = await sql.connect(config);
+
+  try {
+    const checkType =
+    "SELECT COUNT(*) AS count FROM Categorie WHERE type = @type";
+    const checkTypeResult = await pool
+    .request()
+    .input("type", sql.NVarChar, req.body.values.type)
+    .query(checkType);
+  if (checkTypeResult.recordset[0].count > 0) {
+    return res.status(403).json();
+  }
+    const q = `INSERT INTO Categorie(type) VALUES (@type)`;
+    pool
+      .request()
+      .input("type", sql.NVarChar, req.body.values.type)
+      .query(q);
+    return res.status(200).send("New type sended correctly");
+  } catch (err) {
+    console.log(err)
+    return res.status(500);
+    
   }
 });
 
 app.get("/robots", async (req, res) => {
   try {
     const pool = await sql.connect(config);
-    const q = "SELECT * FROM Robot";
+    const q = "SELECT * FROM InfoRobot";
     const result = await pool.request().query(q);
     res.status(200).json(result.recordset);
   } catch (err) {
@@ -51,7 +77,7 @@ app.get("/robotsheet", async (req, res) => {
     const pool = await sql.connect(config);
 
     const q =
-      "SELECT serialNumber, name, mac, idUo, usernameHotspot, nameWifi, passwordWifi, idAnyDesk, passwordAnyDesk, software, firmware, phone, NMU, PIN, PUK, waterPerSecond, tank, servant  FROM Robot WHERE ID = @ID";
+      "SELECT serialNumber, name, mac, idUo, usernameHotspot, nameWifi, passwordWifi, idAnyDesk, passwordAnyDesk, software, firmware, phone, NMU, PIN, PUK, waterPerSecond, tank, servant  FROM InfoRobot WHERE ID = @ID";
     const id = parseInt(req.query.ID, 10);
     const result = await pool.request().input("ID", sql.Int, id).query(q);
     res.status(200).json(result.recordset);
@@ -74,6 +100,20 @@ app.get("/malfunctions", async (req, res) => {
     return res.status(500)
   }
 });
+
+app.get("/types", async (req, res) => {
+  try {
+    const pool = await sql.connect(config);
+    const q = "SELECT * FROM Categorie";
+    const result = await pool.request().query(q);
+    res.status(200).json(result.recordset);
+  } catch (err) {
+    console.log(err)
+   return  res.status(500);
+  }
+});
+
+
 
 app.listen(3000, () => {
   try {

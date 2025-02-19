@@ -3,6 +3,7 @@ import { Image, Text, View } from "react-native";
 
 import RobotSheetIcon from "../../assets/icons/RobotSheetIcon.png";
 import GuastiIcon from "../../assets/icons/GuastiIcon.png";
+import CategorieIcon from "../../assets/icons/CategorieIcon.png";
 import PostIcon from "../../assets/icons/PostIcon.png";
 
 const TabIcon = ({ icon, name }) => {
@@ -48,6 +49,14 @@ export default function TabsLayout() {
           title: "Guasti",
           headerShown: false,
           tabBarIcon: () => <TabIcon icon={GuastiIcon} name="Guasti" />,
+        }}
+      />
+        <Tabs.Screen
+        name="Categorie"
+        options={{
+          title: "Categorie",
+          headerShown: false,
+          tabBarIcon: () => <TabIcon icon={CategorieIcon} name="Categorie" />,
         }}
       />
       <Tabs.Screen

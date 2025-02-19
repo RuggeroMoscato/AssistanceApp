@@ -233,6 +233,45 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 8,
   },
+  malfunctionList: {
+    marginTop: 20,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  
+  malfunctionItem: {
+    backgroundColor: "#f7f7f7",
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 10,
+    borderLeftWidth: 4,
+    borderLeftColor: "#ff4c4c", // Red indicator for malfunction
+  },
+
+  malfunctionText: {
+    fontSize: 16,
+    color: "#2d3748",
+    fontWeight: "500",
+  },
+
+  dateText: {
+    fontSize: 14,
+    color: "#718096",
+    fontStyle: "italic",
+  },
+
+  noDataText: {
+    fontSize: 16,
+    color: "#718096",
+    textAlign: "center",
+    marginTop: 10,
+  },
 });
 
 export default styles;

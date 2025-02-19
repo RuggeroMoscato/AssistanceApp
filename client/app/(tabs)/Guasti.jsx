@@ -31,13 +31,13 @@ function RobotMalfunctions() {
     fetchRobots();
   }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (idRobot) => {
     try {
       const res = await axios.get("http://localhost:3000/malfunctions", {
-        params: { ID: selectedRobot },
+        params: { ID: idRobot },
       });
       if (res.status === 200) {
-        setMalfunctions(res.data[0]);
+        setMalfunctions(res.data);
       }
     } catch (err) {
       console.error(err);
@@ -47,6 +47,11 @@ function RobotMalfunctions() {
   const handleLogout = async () => {
     router.push("/");
   };
+
+  useEffect(() => {
+    console.log(malfunctions);
+    console.log(selectedRobot)
+  }, [selectedRobot]);
 
   return (
     <ScrollView style={styles.AppRobot}>
@@ -81,12 +86,12 @@ function RobotMalfunctions() {
         </View>
 
         <View style={styles.malfunctionList}>
-          {malfunctions.length > 0 ? (
+          {malfunctions ? (
             malfunctions.map((malfunction, index) => (
               <View key={index} style={styles.malfunctionItem}>
                 <Text style={styles.malfunctionText}>
-                  {malfunction.issue} -{" "}
-                  <Text style={styles.dateText}>{malfunction.date}</Text>
+                  {malfunction.guasto} -{" "}
+                  <Text style={styles.dateText}>{new Date(malfunction.data).toLocaleDateString("it-IT")}</Text>
                 </Text>
               </View>
             ))

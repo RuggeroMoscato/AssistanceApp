@@ -10,22 +10,21 @@ import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 
 function Info() {
-  const [selectedRobot, setSelectedRobot] = useState("");
-  const [robotsList, setRobotsList] = useState([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [typesList, setTypeList] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/robots");
+        const res = await axios.get("http://localhost:3000/types");
         if (res.status === 200) {
-          setRobotsList(
-            res.data.map((robot) => ({
-              Text: robot.name,
-              value: robot.ID,
+          setTypeList(
+            res.data.map((type) => ({
+              Text: type.type,
+              value: type.ID,
             }))
           );
-        } else {
-        }
+        } 
       } catch (err) {
         console.log(err);
       }
@@ -33,10 +32,19 @@ function Info() {
     getData();
   }, []);
 
-  const infoPost = async (values, robotId) => {
+  const infoPost = async (values) => {
     try {
-      const res = await axios.post("http://localhost:3000/infopost", {
-        values: values, robotId: robotId ,
+      const res = await axios.post("http://localhost:3000/typePost", {
+        values: values,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const modifyPost = async (values) => {
+    try {
+      const res = await axios.post("http://localhost:3000/typeModify", {
+        values: values,
       });
     } catch (err) {
       console.log(err);
@@ -45,13 +53,13 @@ function Info() {
 
   const { handleChange, values, handleSubmit, touched, errors } = useFormik({
     initialValues: {
-      malfunction: "",
+      type: "",
     },
     validationSchema: Yup.object({
-      malfunction: Yup.string().required("Descrizione del guasto richiesta"),
+      type: Yup.string().required("Nome della categoria richiesta"),
     }),
     onSubmit: (values) => {
-      infoPost(values, selectedRobot);
+      infoPost(values, selectedType);
     },
   });
 
@@ -63,7 +71,7 @@ function Info() {
   return (
     <ScrollView style={styles.App}>
       <View style={styles.header}>
-        <Text style={styles.title}>Inserimento Guasti</Text>
+        <Text style={styles.title}>Inserimento Categorie</Text>
         <View style={styles.navigation}>
           <Button onClick={handleLogout}>
             <LogoutIcon style={styles.logout} />
@@ -71,35 +79,50 @@ function Info() {
         </View>
       </View>
       <View style={styles.container}>
+  
+        <Text>Nuova Categoria: </Text>
+        <TextField
+          multiline
+          id="type"
+          name="type"
+          title="type"
+          type="text"
+          style={styles.infoInput}
+          onChange={handleChange}
+          value={values.type}
+        />
+        <Button style={styles.submitButton} onClick={handleSubmit}>
+          SUBMIT
+        </Button>
         <View style={styles.infoRobotSheet}>
-          <Text style={styles.labelRobot}>Seleziona il robot:</Text>
+          <Text style={styles.labelRobot}> Modifica categoria:</Text>
           <Picker
-            selectedValue={selectedRobot}
-            onValueChange={(itemValue) => setSelectedRobot(itemValue)}
+            selectedValue={selectedType}
+            onValueChange={(itemValue) => setSelectedType(itemValue)}
             style={styles.picker}
           >
-            {robotsList.map((robot) => (
+            {typesList.map((type) => (
               <Picker.Item
-                key={robot.value}
-                label={robot.Text}
-                value={robot.value}
+                key={type.value}
+                label={type.Text}
+                value={type.value}
               />
             ))}
           </Picker>
         </View>
-        <Text>Guasto: </Text>
+        <Text>Inserisci il nuovo nome: </Text>
         <TextField
           multiline
-          id="malfunction"
-          name="malfunction"
-          title="malfunction"
+          id="type"
+          name="type"
+          title="type"
           type="text"
           style={styles.infoInput}
           onChange={handleChange}
-          value={values.malfunction}
+          value={values.type}
         />
         <Button style={styles.submitButton} onClick={handleSubmit}>
-          SUBMIT
+          Modifica
         </Button>
       </View>
     </ScrollView>
