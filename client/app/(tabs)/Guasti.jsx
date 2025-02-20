@@ -39,6 +39,7 @@ function RobotMalfunctions() {
       if (res.status === 200) {
         setMalfunctions(res.data);
       }
+      console.log(res.data)
     } catch (err) {
       console.error(err);
     }
@@ -91,7 +92,8 @@ function RobotMalfunctions() {
               <View key={index} style={styles.malfunctionItem}>
                 <Text style={styles.malfunctionText}>
                   {malfunction.guasto} -{" "}
-                  <Text style={styles.dateText}>{new Date(malfunction.data).toLocaleDateString("it-IT")}</Text>
+                  <Text style={styles.dateText}>{new Date(malfunction.data).toLocaleDateString("it-IT")}</Text> -{" "}
+                  <Text style={styles.dateText}>{malfunction.type}</Text>
                 </Text>
               </View>
             ))
