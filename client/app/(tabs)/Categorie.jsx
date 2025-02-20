@@ -1,10 +1,9 @@
 import styles from "../styles";
 import axios from "axios";
 import * as Yup from "yup";
-import LogoutIcon from "@mui/icons-material/Logout";
+import LogoutIcon from "../../assets/icons/logout.png";
 import { useFormik } from "formik";
-import { ScrollView, Text, View } from "react-native";
-import { Button, TextField } from "@mui/material";
+import { ScrollView, Text, View, Button, TextInput } from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
@@ -90,7 +89,7 @@ function Info() {
       </View>
       <View style={styles.containerTwo}>
         <Text>Nuova Categoria: </Text>
-        <TextField
+        <TextInput
           id="type"
           name="type"
           title="type"
@@ -121,7 +120,7 @@ function Info() {
           </Picker>
         </View>
         <Text>Inserisci il nuovo nome: </Text>
-        <TextField
+        <TextInput
           id="typeChange"
           name="typeChange"
           title="typeChange"

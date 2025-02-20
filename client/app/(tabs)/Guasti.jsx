@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
-import { Button } from "@mui/material";
+import { ScrollView, Text, View, Button } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import styles from "../styles";
 import { router } from "expo-router";
-import LogoutIcon from "@mui/icons-material/Logout";
+import LogoutIcon from "../../assets/icons/logout.png";
+import DatePicker from "react-native-date-picker";
 
 function RobotMalfunctions() {
   const [robotsList, setRobotsList] = useState([]);
   const [malfunctions, setMalfunctions] = useState([]);
   const [selectedRobot, setSelectedRobot] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchRobots = async () => {
@@ -39,7 +41,7 @@ function RobotMalfunctions() {
       if (res.status === 200) {
         setMalfunctions(res.data);
       }
-      console.log(res.data)
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -51,7 +53,7 @@ function RobotMalfunctions() {
 
   useEffect(() => {
     console.log(malfunctions);
-    console.log(selectedRobot)
+    console.log(selectedRobot);
   }, [selectedRobot]);
 
   return (
@@ -84,6 +86,19 @@ function RobotMalfunctions() {
               />
             ))}
           </Picker>
+          <Button title="Open" onPress={() => setOpen(true)} />
+          <DatePicker
+            modal
+            open={open}
+            date={date}
+            onConfirm={(date) => {
+              setOpen(false);
+              setDate(date);
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
         </View>
 
         <View style={styles.malfunctionList}>
@@ -92,8 +107,10 @@ function RobotMalfunctions() {
               <View key={index} style={styles.malfunctionItem}>
                 <Text style={styles.malfunctionText}>
                   {malfunction.guasto} -{" "}
-                  <Text style={styles.dateText}>{new Date(malfunction.data).toLocaleDateString("it-IT")}</Text> -{" "}
-                  <Text style={styles.dateText}>{malfunction.type}</Text>
+                  <Text style={styles.dateText}>
+                    {new Date(malfunction.data).toLocaleDateString("it-IT")}
+                  </Text>{" "}
+                  - <Text style={styles.dateText}>{malfunction.type}</Text>
                 </Text>
               </View>
             ))

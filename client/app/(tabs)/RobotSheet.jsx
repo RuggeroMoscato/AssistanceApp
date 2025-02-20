@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "../styles";
 import axios from "axios";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { ScrollView, Text, View } from "react-native";
+import LogoutIcon from "../../assets/icons/logout.png";
+import { ScrollView, Text, View, Button } from "react-native";
 import { Redirect, router } from "expo-router";
-import { Button } from "@mui/material";
 import { Picker } from "@react-native-picker/picker";
 
 function RobotSheet() {

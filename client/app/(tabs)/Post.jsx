@@ -1,10 +1,9 @@
 import styles from "../styles";
 import axios from "axios";
 import * as Yup from "yup";
-import LogoutIcon from "@mui/icons-material/Logout";
+import LogoutIcon from "../../assets/icons/logout.png";
 import { useFormik } from "formik";
-import { ScrollView, Text, View } from "react-native";
-import { Button, TextField } from "@mui/material";
+import { ScrollView, Text, View, Button, TextInput } from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
@@ -125,7 +124,7 @@ function Info() {
           </Picker>
         </View>
         <Text>Inserisci il Guasto: </Text>
-        <TextField
+        <TextInput
           multiline
           id="malfunction"
           name="malfunction"
