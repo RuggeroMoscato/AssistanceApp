@@ -30,28 +30,28 @@ function Info() {
       }
     };
     getData();
-  }, []);
+  }, [selectedType]);
 
-  const infoPost = async (values) => {
+  const infoPost = async (type) => {
     try {
       const res = await axios.post("http://localhost:3000/typePost", {
-        values: values,
+        type: type,
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const modifyPost = async (values, ID) => {
+  const modifyPost = async (typeChange, ID) => {
     try {
       const res = await axios.post("http://localhost:3000/typeModify", {
-        values: values,
+        typeChange: typeChange,
         ID: ID,
       });
     } catch (err) {
       console.log(err);
     }
   };
-  const deletePost = async (values, ID) => {
+  const deletePost = async (ID) => {
     try {
       const res = await axios.post("http://localhost:3000/typeDelete", {
         ID: ID,
@@ -64,12 +64,13 @@ function Info() {
   const { handleChange, values, handleSubmit, touched, errors } = useFormik({
     initialValues: {
       type: "",
+      typeChange: "",
     },
     validationSchema: Yup.object({
       type: Yup.string().required("Nome della categoria richiesta"),
     }),
     onSubmit: (values) => {
-      infoPost(values, selectedType);
+      infoPost(values.type, selectedType);
     },
   });
 
@@ -87,10 +88,9 @@ function Info() {
           </Button>
         </View>
       </View>
-      <View style={styles.container}>
+      <View style={styles.containerTwo}>
         <Text>Nuova Categoria: </Text>
         <TextField
-          multiline
           id="type"
           name="type"
           title="type"
@@ -102,6 +102,8 @@ function Info() {
         <Button style={styles.submitButton} onClick={handleSubmit}>
           SUBMIT
         </Button>
+      </View>
+      <View style={styles.containerTwo}>
         <View style={styles.infoRobotSheet}>
           <Text style={styles.labelRobot}> Modifica categoria:</Text>
           <Picker
@@ -120,21 +122,28 @@ function Info() {
         </View>
         <Text>Inserisci il nuovo nome: </Text>
         <TextField
-          multiline
-          id="type"
-          name="type"
-          title="type"
+          id="typeChange"
+          name="typeChange"
+          title="typeChange"
           type="text"
           style={styles.infoInput}
           onChange={handleChange}
-          value={values.type}
+          value={values.typeChange}
         />
-        <Button
-          style={styles.submitButton}
-          onClick={modifyPost(values, selectedType)}
-        >
-          Modifica
-        </Button>
+        <View style={styles.buttonContainer}>
+          <Button
+            style={styles.deleteButton}
+            onClick={() => deletePost(selectedType)}
+          >
+            Elimina
+          </Button>
+          <Button
+            style={styles.modifyButton}
+            onClick={() => modifyPost(values.typeChange, selectedType)}
+          >
+            Modifica
+          </Button>
+        </View>
       </View>
     </ScrollView>
   );

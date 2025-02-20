@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  title: { fontSize: 34, },
+  title: { fontSize: 34 },
   navigation: {
     flexDirection: "row",
     gap: 10,
@@ -30,6 +30,17 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    padding: 20,
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  containerTwo: {
     padding: 20,
     margin: 20,
     backgroundColor: "white",
@@ -60,6 +71,27 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     color: "white",
     fontWeight: "bold",
+  },
+  deleteButton: {
+    backgroundColor: "	rgb(238, 75, 43)",
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    color: "white",
+    fontWeight: "bold",
+    width: "45%",
+  },
+  modifyButton: {
+    backgroundColor: "rgb(34, 139, 34)",
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    color: "white",
+    fontWeight: "bold",
+    width: "45%",
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   label: {
     width: "50%",
@@ -122,22 +154,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-
   registerResidency: {
     width: "20%",
     flexDirection: "row",
     gap: 10,
     padding: 2,
-  },
-  infoRobotSheet: {
-    width: "50%",
-    fontSize: 12,
-    height: "4.5%",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    gap: 2,
-    padding: 0,
-    flexDirection: "row",
   },
   inputIOS: {
     fontSize: 16,
@@ -220,9 +241,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: "40%",
   },
-  noDataText: {
-    paddingTop: 20,
-  },
 
   picker: {
     flex: 1,
@@ -244,7 +262,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
-  
+
   malfunctionItem: {
     backgroundColor: "#f7f7f7",
     padding: 12,

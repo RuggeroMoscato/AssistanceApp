@@ -95,13 +95,13 @@ app.post("/typePost", async (req, res) => {
       "SELECT COUNT(*) AS count FROM Categorie WHERE type = @type";
     const checkTypeResult = await pool
       .request()
-      .input("type", sql.NVarChar, req.body.values.type)
+      .input("type", sql.NVarChar, req.body.type)
       .query(checkType);
     if (checkTypeResult.recordset[0].count > 0) {
       return res.status(403).json();
     }
     const q = `INSERT INTO Categorie(type) VALUES (@type)`;
-    pool.request().input("type", sql.NVarChar, req.body.values.type).query(q);
+    pool.request().input("type", sql.NVarChar, req.body.type).query(q);
     return res.status(200).send("New type sended correctly");
   } catch (err) {
     console.log(err);
@@ -135,10 +135,19 @@ app.post("/typeModify", async (req, res) => {
   const pool = await sql.connect(config);
   const id = parseInt(req.body.ID, 10);
   try {
+     const checkType =
+      "SELECT COUNT(*) AS count FROM Categorie WHERE type = @type";
+    const checkTypeResult = await pool
+      .request()
+      .input("type", sql.NVarChar, req.body.typeChange)
+      .query(checkType);
+    if (checkTypeResult.recordset[0].count > 0) {
+      return res.status(403).json();
+    }
     const q = `UPDATE Categorie SET type = @type WHERE ID = @ID;`;
     pool
       .request()
-      .input("type", sql.NVarChar, req.body.values.type)
+      .input("type", sql.NVarChar, req.body.typeChange)
       .input("ID", sql.Int, id)
       .query(q);
     return res.status(200).send("Type modified successfully");
