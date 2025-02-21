@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   logout: {
-    color: "#d32f2f",
-    fontSize: 28,
+    width: 20,
+    height: 20,
   },
   container: {
     flex: 1,
@@ -53,14 +53,13 @@ const styles = StyleSheet.create({
   },
   infoInput: {
     width: "100%",
-    minHeight: 150,
-    marginVertical: 15,
-    borderWidth: 1,
-    borderColor: "#bdbdbd",
+    minHeight: 45,
     borderRadius: 8,
-    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#ddd",
     fontSize: 16,
-    textAlignVertical: "top",
+    marginBottom: 10,
   },
   submitButton: {
     backgroundColor: "rgb(52, 209, 191)",
@@ -79,6 +78,9 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     width: "45%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   modifyButton: {
     backgroundColor: "rgb(34, 139, 34)",
@@ -87,11 +89,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     width: "45%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    height: "20%",
+    marginBottom: 15,
   },
   label: {
     width: "50%",
@@ -211,9 +218,9 @@ const styles = StyleSheet.create({
     gap: 15,
     alignItems: "center",
   },
-  logoutRobot: {
-    color: "#d32f2f",
-    fontSize: 28,
+  logout: {
+    width: 20,
+    height: 20,
   },
   containerRobot: {
     flex: 1,
@@ -231,6 +238,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  infoRobotSheetColumn: {
+    flexDirection: "column",
+    justifyContent: "space-between",
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",

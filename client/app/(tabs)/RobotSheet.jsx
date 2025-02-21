@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles";
 import axios from "axios";
 import LogoutIcon from "../../assets/icons/logout.png";
-import { ScrollView, Text, View, Button } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
@@ -57,9 +57,9 @@ function RobotSheet() {
     <ScrollView style={styles.AppRobot}>
       <View style={styles.headerRobot}>
         <Text style={styles.title}>Scheda del Robot</Text>
-        <Button onClick={handleLogout}>
-          <LogoutIcon style={styles.logoutRobot} />
-        </Button>
+        <TouchableOpacity onPress={handleLogout}>
+            <Image source={LogoutIcon} style={styles.logout} />
+          </TouchableOpacity>
       </View>
       <View style={styles.containerRobot}>
         <View style={styles.infoRobotSheet}>

@@ -65,7 +65,7 @@ app.get("/robotsheet", async (req, res) => {
 app.get("/malfunctions", async (req, res) => {
   try {
     const pool = await sql.connect(config);
-    const q = "SELECT guasto, data, type FROM Guasti INNER JOIN Categorie ON Guasti.idType = Categorie.ID WHERE idRobot = @idRobot";
+    const q = "SELECT guasto, data, type, idType FROM Guasti INNER JOIN Categorie ON Guasti.idType = Categorie.ID WHERE idRobot = @idRobot";
     const id = parseInt(req.query.ID, 10);
     const result = await pool.request().input("idRobot", sql.Int, id).query(q);
     res.status(200).json(result.recordset);

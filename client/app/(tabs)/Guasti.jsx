@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View, Button } from "react-native";
+import {
+  ScrollView,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import styles from "../styles";
 import { router } from "expo-router";
-import LogoutIcon from "../../assets/icons/logout.png";
 import DatePicker from "react-native-date-picker";
+import LogoutIcon from "../../assets/icons/logout.png";
 
 function RobotMalfunctions() {
   const [robotsList, setRobotsList] = useState([]);
+  const [typesList, setTypesList] = useState([]);
   const [malfunctions, setMalfunctions] = useState([]);
   const [selectedRobot, setSelectedRobot] = useState("");
+  const [selectedType, setSelectedType] = useState("");
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
@@ -33,6 +42,25 @@ function RobotMalfunctions() {
     fetchRobots();
   }, []);
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/types");
+        if (res.status === 200) {
+          setTypesList(
+            res.data.map((type) => ({
+              label: type.type, 
+              value: type.ID,
+            }))
+          );
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getData();
+  }, []);
+
   const handleSubmit = async (idRobot) => {
     try {
       const res = await axios.get("http://localhost:3000/malfunctions", {
@@ -42,12 +70,13 @@ function RobotMalfunctions() {
         setMalfunctions(res.data);
       }
       console.log(res.data);
+      console.log(selectedType);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     router.push("/");
   };
 
@@ -61,14 +90,14 @@ function RobotMalfunctions() {
       <View style={styles.headerRobot}>
         <Text style={{ fontSize: 34 }}>Lista Guasti</Text>
         <View style={styles.navigation}>
-          <Button onClick={handleLogout}>
-            <LogoutIcon style={styles.logout} />
-          </Button>
+          <TouchableOpacity onPress={handleLogout}>
+            <Image source={LogoutIcon} style={styles.logout} />
+          </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.containerRobot}>
-        <View style={styles.infoRobotSheet}>
+        <View style={styles.infoRobotSheetColumn}>
           <Text style={styles.labelRobot}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
@@ -86,6 +115,24 @@ function RobotMalfunctions() {
               />
             ))}
           </Picker>
+
+          <Text style={styles.labelRobot}>Modifica categoria:</Text>
+          <Picker
+            selectedValue={selectedType}
+            onValueChange={(itemValue) => {
+              setSelectedType(itemValue);
+            }}
+            style={styles.picker}
+          >
+            {typesList.map((type) => (
+              <Picker.Item
+                key={type.value}
+                label={type.label}
+                value={type.value}
+              />
+            ))}
+          </Picker>
+
           <Button title="Open" onPress={() => setOpen(true)} />
           <DatePicker
             modal
@@ -95,25 +142,41 @@ function RobotMalfunctions() {
               setOpen(false);
               setDate(date);
             }}
-            onCancel={() => {
-              setOpen(false);
-            }}
+            onCancel={() => setOpen(false)}
           />
         </View>
 
         <View style={styles.malfunctionList}>
-          {malfunctions ? (
-            malfunctions.map((malfunction, index) => (
-              <View key={index} style={styles.malfunctionItem}>
-                <Text style={styles.malfunctionText}>
-                  {malfunction.guasto} -{" "}
-                  <Text style={styles.dateText}>
-                    {new Date(malfunction.data).toLocaleDateString("it-IT")}
-                  </Text>{" "}
-                  - <Text style={styles.dateText}>{malfunction.type}</Text>
-                </Text>
-              </View>
-            ))
+          {malfunctions.length > 0 ? (
+            selectedType ? (
+              malfunctions
+                .filter(
+                  (malfunction) => malfunction.idType === Number(selectedType)
+                )
+                .map((malfunction, index) => (
+                  <View key={index} style={styles.malfunctionItem}>
+                    <Text style={styles.malfunctionText}>
+                      {malfunction.guasto} -{" "}
+                      <Text style={styles.dateText}>
+                        {new Date(malfunction.data).toLocaleDateString("it-IT")}
+                      </Text>{" "}
+                      - <Text style={styles.dateText}>{malfunction.type}</Text>
+                    </Text>
+                  </View>
+                ))
+            ) : (
+              malfunctions.map((malfunction, index) => (
+                <View key={index} style={styles.malfunctionItem}>
+                  <Text style={styles.malfunctionText}>
+                    {malfunction.guasto} -{" "}
+                    <Text style={styles.dateText}>
+                      {new Date(malfunction.data).toLocaleDateString("it-IT")}
+                    </Text>{" "}
+                    - <Text style={styles.dateText}>{malfunction.type}</Text>
+                  </Text>
+                </View>
+              ))
+            )
           ) : (
             <Text style={styles.noDataText}>Nessun guasto trovato</Text>
           )}

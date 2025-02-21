@@ -3,7 +3,7 @@ import axios from "axios";
 import * as Yup from "yup";
 import LogoutIcon from "../../assets/icons/logout.png";
 import { useFormik } from "formik";
-import { ScrollView, Text, View, Button, TextInput } from "react-native";
+import { ScrollView, Text, View, Button, TextInput, TouchableOpacity, Image } from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
@@ -85,9 +85,9 @@ function Info() {
       <View style={styles.header}>
         <Text style={styles.title}>Inserimento Guasti</Text>
         <View style={styles.navigation}>
-          <Button onClick={handleLogout}>
-            <LogoutIcon style={styles.logout} />
-          </Button>
+        <TouchableOpacity onPress={handleLogout}>
+            <Image source={LogoutIcon} style={styles.logout} />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.container}>
@@ -134,9 +134,9 @@ function Info() {
           onChange={handleChange}
           value={values.malfunction}
         />
-        <Button style={styles.submitButton} onClick={handleSubmit}>
-          SUBMIT
-        </Button>
+        <TouchableOpacity style={styles.submitButton} onClick={handleSubmit}>
+        <Text style={{color:"white", fontWeight:"bold"}}>Invia</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
