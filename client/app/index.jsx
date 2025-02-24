@@ -40,7 +40,7 @@ const Login = () => {
 
       if (userCredential.user) {
         setIsLogged(true);
-        router.replace("/RobotSheet");
+        router.replace("/Scheda");
       }
     } catch (error) {
       let errorMessage = "Errore durante il login";

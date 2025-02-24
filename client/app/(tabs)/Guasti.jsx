@@ -26,7 +26,7 @@ function RobotMalfunctions() {
   useEffect(() => {
     const fetchRobots = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/robots");
+        const res = await axios.get("http://192.168.1.143:3000/robots");
         if (res.status === 200) {
           setRobotsList(
             res.data.map((robot) => ({
@@ -45,7 +45,7 @@ function RobotMalfunctions() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/types");
+        const res = await axios.get("http://192.168.1.143:3000/types");
         if (res.status === 200) {
           setTypesList(
             res.data.map((type) => ({
@@ -63,14 +63,12 @@ function RobotMalfunctions() {
 
   const handleSubmit = async (idRobot) => {
     try {
-      const res = await axios.get("http://localhost:3000/malfunctions", {
+      const res = await axios.get("http://192.168.1.143:3000/malfunctions", {
         params: { ID: idRobot },
       });
       if (res.status === 200) {
         setMalfunctions(res.data);
       }
-      console.log(res.data);
-      console.log(selectedType);
     } catch (err) {
       console.error(err);
     }
@@ -80,10 +78,6 @@ function RobotMalfunctions() {
     router.push("/");
   };
 
-  useEffect(() => {
-    console.log(malfunctions);
-    console.log(selectedRobot);
-  }, [selectedRobot]);
 
   return (
     <ScrollView style={styles.AppRobot}>
@@ -116,7 +110,7 @@ function RobotMalfunctions() {
             ))}
           </Picker>
 
-          <Text style={styles.labelRobot}>Modifica categoria:</Text>
+          <Text style={styles.labelRobot}>Seleziona la categoria:</Text>
           <Picker
             selectedValue={selectedType}
             onValueChange={(itemValue) => {

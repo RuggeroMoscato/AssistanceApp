@@ -8,13 +8,11 @@ import PostIcon from "../../assets/icons/PostIcon.png";
 
 const TabIcon = ({ icon, name }) => {
   return (
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <Image
-        source={icon}
-        resizeMode="contain"
-        style={{ width: 24, height: 24 }}
-      />
-      <Text>{name}</Text>
+    <View style={{alignItems: "center", justifyContent: "center", width: 80, marginTop:25 }}>
+      <Image source={icon} resizeMode="contain" style={{ width: 26, height: 26 }} />
+      <Text style={{ fontSize: 12 }} numberOfLines={1} ellipsizeMode="tail">
+        {name}
+      </Text>
     </View>
   );
 };
@@ -30,16 +28,16 @@ export default function TabsLayout() {
           backgroundColor: "#FFFFFF",
           borderTopWidth: 1,
           borderTopColor: "#FFFFFF",
-          height: 84,
+          height: 80, 
         },
       }}
     >
       <Tabs.Screen
-        name="RobotSheet"
+        name="Scheda"
         options={{
-          title: "RobotSheet",
+          title: "Scheda",
           headerShown: false,
-          tabBarIcon: () => <TabIcon icon={RobotSheetIcon} name="RobotSheet" />,
+          tabBarIcon: () => <TabIcon icon={RobotSheetIcon} name="Scheda" />,
         }}
       />
 
@@ -51,7 +49,7 @@ export default function TabsLayout() {
           tabBarIcon: () => <TabIcon icon={GuastiIcon} name="Guasti" />,
         }}
       />
-        <Tabs.Screen
+      <Tabs.Screen
         name="Categorie"
         options={{
           title: "Categorie",

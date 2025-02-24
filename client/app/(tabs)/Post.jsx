@@ -17,7 +17,7 @@ function Info() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/robots");
+        const res = await axios.get("http://192.168.1.143:3000/robots");
         if (res.status === 200) {
           setRobotsList(
             res.data.map((robot) => ({
@@ -36,7 +36,7 @@ function Info() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/types");
+        const res = await axios.get("http://192.168.1.143:3000/types");
         if (res.status === 200) {
           setTypeList(
             res.data.map((type) => ({
@@ -54,7 +54,7 @@ function Info() {
 
   const infoPost = async (values, robotId, typeId) => {
     try {
-      const res = await axios.post("http://localhost:3000/infopost", {
+      const res = await axios.post("http://192.168.1.143:3000/infopost", {
         values: values,
         robotId: robotId,
         typeId: typeId,

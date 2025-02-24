@@ -8,7 +8,7 @@ const config = require("./config");
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:8081",
+    origin: "http://192.168.1.143:8081",
     credentials: true,
   })
 );

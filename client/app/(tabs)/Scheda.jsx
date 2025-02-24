@@ -6,7 +6,7 @@ import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
-function RobotSheet() {
+function Scheda() {
   const [robotsList, setRobotsList] = useState([]);
   const [robotInfo, setRobotInfo] = useState();
   const [selectedRobot, setSelectedRobot] = useState([]);
@@ -14,7 +14,7 @@ function RobotSheet() {
     const getData = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/robots",
+          "http://192.168.1.143:3000/robots",
         );
         if (res.status === 200) {
           setRobotsList(
@@ -34,7 +34,7 @@ function RobotSheet() {
   const handleSubmit = async (value) => {
     try {
       const res = await axios.get(
-        "http://localhost:3000/robotsheet",
+        "http://192.168.1.143:3000/robotsheet",
         {
           params: { ID: value },
         },
@@ -99,7 +99,7 @@ function RobotSheet() {
         </View>
         <View style={styles.infoRobotSheet}>
           <Text style={styles.labelRobot}>Nome Rete WiFi:</Text>
-          <p>{robotInfo ? robotInfo.nameWifi : null}</p>
+          <Text>{robotInfo ? robotInfo.nameWifi : null}</Text>
         </View>
         <View style={styles.infoRobotSheet}>
           <Text style={styles.labelRobot}>Password WiFi:</Text>
@@ -138,4 +138,4 @@ function RobotSheet() {
   );
 }
 
-export default RobotSheet;
+export default Scheda;

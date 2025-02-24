@@ -23,7 +23,7 @@ function Info() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/types");
+        const res = await axios.get("http://192.168.1.143:3000/types");
         if (res.status === 200) {
           setTypesList(
             res.data.map((type) => ({
@@ -41,7 +41,7 @@ function Info() {
 
   const infoPost = async (type) => {
     try {
-      const res = await axios.post("http://localhost:3000/typePost", {
+      const res = await axios.post("http://192.168.1.143:3000/typePost", {
         type: type,
       });
     } catch (err) {
@@ -50,7 +50,7 @@ function Info() {
   };
   const modifyPost = async (typeChange, ID) => {
     try {
-      const res = await axios.post("http://localhost:3000/typeModify", {
+      const res = await axios.post("http://192.168.1.143:3000/typeModify", {
         typeChange: typeChange,
         ID: ID,
       });
@@ -60,7 +60,7 @@ function Info() {
   };
   const deletePost = async (ID) => {
     try {
-      const res = await axios.post("http://localhost:3000/typeDelete", {
+      const res = await axios.post("http://192.168.1.143:3000/typeDelete", {
         ID: ID,
       });
     } catch (err) {
