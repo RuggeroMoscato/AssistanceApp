@@ -13,17 +13,15 @@ function Scheda() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get(
-          "http://192.168.1.143:3000/robots",
-        );
+        const res = await axios.get("http://192.168.1.143:3000/robots");
         if (res.status === 200) {
-          setRobotsList(
-            res.data.map((robot) => ({
-              Text: robot.name,
-              value: robot.ID,
-            }))
-          );
-        } else {
+          const formattedRobots = res.data.map((robot) => ({
+            Text: robot.name,
+            value: robot.ID,
+          }));
+          setRobotsList(formattedRobots);
+          setSelectedRobot(formattedRobots[0].value);
+          handleSubmit(formattedRobots[0].value)
         }
       } catch (err) {
         console.log(err);
@@ -33,12 +31,9 @@ function Scheda() {
   }, []);
   const handleSubmit = async (value) => {
     try {
-      const res = await axios.get(
-        "http://192.168.1.143:3000/robotsheet",
-        {
-          params: { ID: value },
-        },
-      );
+      const res = await axios.get("http://192.168.1.143:3000/robotsheet", {
+        params: { ID: value },
+      });
       if (res.status === 200) {
         setRobotInfo(res.data[0]);
       } else {
@@ -51,15 +46,13 @@ function Scheda() {
     router.push("/");
   };
 
-
-
   return (
     <ScrollView style={styles.AppRobot}>
       <View style={styles.headerRobot}>
         <Text style={styles.title}>Scheda del Robot</Text>
         <TouchableOpacity onPress={handleLogout}>
-            <Image source={LogoutIcon} style={styles.logout} />
-          </TouchableOpacity>
+          <Image source={LogoutIcon} style={styles.logout} />
+        </TouchableOpacity>
       </View>
       <View style={styles.containerRobot}>
         <View style={styles.infoRobotSheet}>

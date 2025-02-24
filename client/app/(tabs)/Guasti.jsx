@@ -28,12 +28,13 @@ function RobotMalfunctions() {
       try {
         const res = await axios.get("http://192.168.1.143:3000/robots");
         if (res.status === 200) {
-          setRobotsList(
-            res.data.map((robot) => ({
-              label: robot.name,
-              value: robot.ID,
-            }))
-          );
+          const formattedRobots = res.data.map((robot) => ({
+            label: robot.name,
+            value: robot.ID,
+          }));
+          setRobotsList(formattedRobots);
+          setSelectedRobot(formattedRobots[0].value);
+          handleSubmit(formattedRobots[0].value);
         }
       } catch (err) {
         console.error(err);
@@ -55,6 +56,7 @@ function RobotMalfunctions() {
           const updatedTypesList = [allOption, ...formattedTypes];
 
           setTypesList(updatedTypesList);
+          setSelectedType("Tutti");
         }
       } catch (err) {
         console.log(err);
@@ -62,6 +64,7 @@ function RobotMalfunctions() {
     };
     getData();
   }, []);
+
 
   const handleSubmit = async (idRobot) => {
     try {

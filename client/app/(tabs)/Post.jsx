@@ -3,7 +3,15 @@ import axios from "axios";
 import * as Yup from "yup";
 import LogoutIcon from "../../assets/icons/logout.png";
 import { useFormik } from "formik";
-import { ScrollView, Text, View, Button, TextInput, TouchableOpacity, Image } from "react-native";
+import {
+  ScrollView,
+  Text,
+  View,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
@@ -19,13 +27,12 @@ function Info() {
       try {
         const res = await axios.get("http://192.168.1.143:3000/robots");
         if (res.status === 200) {
-          setRobotsList(
-            res.data.map((robot) => ({
-              Text: robot.name,
-              value: robot.ID,
-            }))
-          );
-        } else {
+          const formattedRobots = res.data.map((robot) => ({
+            Text: robot.name,
+            value: robot.ID,
+          }));
+          setRobotsList(formattedRobots);
+          setSelectedRobot(formattedRobots[0].value);
         }
       } catch (err) {
         console.log(err);
@@ -38,12 +45,12 @@ function Info() {
       try {
         const res = await axios.get("http://192.168.1.143:3000/types");
         if (res.status === 200) {
-          setTypeList(
-            res.data.map((type) => ({
-              Text: type.type,
-              value: type.ID,
-            }))
-          );
+          const formattedTypes = res.data.map((type) => ({
+            Text: type.type,
+            value: type.ID,
+          }));
+          setTypeList(formattedTypes);
+          setSelectedType(formattedTypes[0].value);
         }
       } catch (err) {
         console.log(err);
@@ -85,7 +92,7 @@ function Info() {
       <View style={styles.header}>
         <Text style={styles.title}>Inserimento Guasti</Text>
         <View style={styles.navigation}>
-        <TouchableOpacity onPress={handleLogout}>
+          <TouchableOpacity onPress={handleLogout}>
             <Image source={LogoutIcon} style={styles.logout} />
           </TouchableOpacity>
         </View>
@@ -126,16 +133,15 @@ function Info() {
         <Text>Inserisci il Guasto: </Text>
         <TextInput
           multiline
-          id="malfunction"
-          name="malfunction"
-          title="malfunction"
-          type="text"
           style={styles.infoInput}
-          onChange={handleChange}
+          onChangeText={handleChange("malfunction")}
           value={values.malfunction}
         />
-        <TouchableOpacity style={styles.submitButton} onClick={handleSubmit}>
-        <Text style={{color:"white", fontWeight:"bold"}}>Invia</Text>
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={()=>handleSubmit(values,selectedRobot,selectedType)}
+        >
+          <Text style={{ color: "white", fontWeight: "bold" }}>Invia</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

@@ -31,6 +31,7 @@ app.post("/infopost", async (req, res) => {
       .query(q);
     return res.status(200).send("malfunctions sended correctly");
   } catch (err) {
+    console.log(err)
     return res.status(500);
   }
 });
