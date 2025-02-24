@@ -255,6 +255,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: "40%",
   },
+  labelSelect: {
+    fontWeight: "600",
+    color: "#2d3748",
+    fontSize: 16,
+    width: "60%",
+  },
+
 
   picker: {
     flex: 1,

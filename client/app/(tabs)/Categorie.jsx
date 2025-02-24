@@ -96,7 +96,7 @@ function Info() {
         </View>
       </View>
       <View style={styles.containerTwo}>
-        <Text>Nuova Categoria: </Text>
+        <Text style={styles.labelSelect}>Nuova Categoria: </Text>
         <TextInput
           id="type"
           name="type"
@@ -127,7 +127,7 @@ function Info() {
             ))}
           </Picker>
         </View>
-        <Text>Inserisci il nuovo nome: </Text>
+        <Text style={styles.labelSelect}>Inserisci il nuovo nome: </Text>
         <TextInput
           id="typeChange"
           name="typeChange"

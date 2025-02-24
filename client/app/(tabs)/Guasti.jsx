@@ -47,12 +47,14 @@ function RobotMalfunctions() {
       try {
         const res = await axios.get("http://192.168.1.143:3000/types");
         if (res.status === 200) {
-          setTypesList(
-            res.data.map((type) => ({
-              label: type.type, 
-              value: type.ID,
-            }))
-          );
+          const formattedTypes = res.data.map((type) => ({
+            label: type.type,
+            value: type.ID,
+          }));
+          const allOption = { label: "Tutti", value: "Tutti" };
+          const updatedTypesList = [allOption, ...formattedTypes];
+
+          setTypesList(updatedTypesList);
         }
       } catch (err) {
         console.log(err);
@@ -78,7 +80,6 @@ function RobotMalfunctions() {
     router.push("/");
   };
 
-
   return (
     <ScrollView style={styles.AppRobot}>
       <View style={styles.headerRobot}>
@@ -92,7 +93,7 @@ function RobotMalfunctions() {
 
       <View style={styles.containerRobot}>
         <View style={styles.infoRobotSheetColumn}>
-          <Text style={styles.labelRobot}>Seleziona il robot:</Text>
+          <Text style={styles.labelSelect}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
             onValueChange={(itemValue) => {
@@ -110,7 +111,7 @@ function RobotMalfunctions() {
             ))}
           </Picker>
 
-          <Text style={styles.labelRobot}>Seleziona la categoria:</Text>
+          <Text style={styles.labelSelect}>Seleziona la categoria:</Text>
           <Picker
             selectedValue={selectedType}
             onValueChange={(itemValue) => {
@@ -142,7 +143,7 @@ function RobotMalfunctions() {
 
         <View style={styles.malfunctionList}>
           {malfunctions.length > 0 ? (
-            selectedType ? (
+            selectedType !== "Tutti" ? (
               malfunctions
                 .filter(
                   (malfunction) => malfunction.idType === Number(selectedType)
