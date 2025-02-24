@@ -21,7 +21,7 @@ function RobotMalfunctions() {
   const [selectedRobot, setSelectedRobot] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [openPicker, setOpenPicker] = useState(false);
 
   useEffect(() => {
     const fetchRobots = async () => {
@@ -131,16 +131,16 @@ function RobotMalfunctions() {
             ))}
           </Picker>
 
-          <Button title="Open" onPress={() => setOpen(true)} />
+          <Button title="OpenPicker" onPress={() => setOpenPicker(true)} />
           <DatePicker
             modal
-            open={open}
+            open={openPicker}
             date={date}
             onConfirm={(date) => {
-              setOpen(false);
+              setOpenPicker(false);
               setDate(date);
             }}
-            onCancel={() => setOpen(false)}
+            onCancel={() => setOpenPicker(false)}
           />
         </View>
 

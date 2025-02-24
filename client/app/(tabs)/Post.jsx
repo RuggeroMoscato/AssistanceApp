@@ -28,7 +28,7 @@ function Info() {
         const res = await axios.get("http://192.168.1.143:3000/robots");
         if (res.status === 200) {
           const formattedRobots = res.data.map((robot) => ({
-            Text: robot.name,
+            label: robot.name,
             value: robot.ID,
           }));
           setRobotsList(formattedRobots);
@@ -46,7 +46,7 @@ function Info() {
         const res = await axios.get("http://192.168.1.143:3000/types");
         if (res.status === 200) {
           const formattedTypes = res.data.map((type) => ({
-            Text: type.type,
+            label: type.type,
             value: type.ID,
           }));
           setTypeList(formattedTypes);
@@ -108,7 +108,7 @@ function Info() {
             {robotsList.map((robot) => (
               <Picker.Item
                 key={robot.value}
-                label={robot.Text}
+                label={robot.label}
                 value={robot.value}
               />
             ))}
@@ -124,7 +124,7 @@ function Info() {
             {typesList.map((type) => (
               <Picker.Item
                 key={type.value}
-                label={type.Text}
+                label={type.label}
                 value={type.value}
               />
             ))}

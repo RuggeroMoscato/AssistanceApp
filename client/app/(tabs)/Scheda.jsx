@@ -16,7 +16,7 @@ function Scheda() {
         const res = await axios.get("http://192.168.1.143:3000/robots");
         if (res.status === 200) {
           const formattedRobots = res.data.map((robot) => ({
-            Text: robot.name,
+            label: robot.name,
             value: robot.ID,
           }));
           setRobotsList(formattedRobots);
@@ -68,7 +68,7 @@ function Scheda() {
             {robotsList.map((robot) => (
               <Picker.Item
                 key={robot.value}
-                label={robot.Text}
+                label={robot.label}
                 value={robot.value}
               />
             ))}

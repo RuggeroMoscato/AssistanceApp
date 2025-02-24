@@ -7,12 +7,11 @@ import {
   ScrollView,
   Text,
   View,
-  Button,
   TextInput,
   TouchableOpacity,
   Image,
 } from "react-native";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 
@@ -26,7 +25,7 @@ function Info() {
         const res = await axios.get("http://192.168.1.143:3000/types");
         if (res.status === 200) {
           const formattedTypes = res.data.map((type) => ({
-            Text: type.type,
+            label: type.type,
             value: type.ID,
           }));
           setTypeList(formattedTypes);
@@ -117,7 +116,7 @@ function Info() {
             {typeList.map((type) => (
               <Picker.Item
                 key={type.value}
-                label={type.Text}
+                label={type.label}
                 value={type.value}
               />
             ))}
