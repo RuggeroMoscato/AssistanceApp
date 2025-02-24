@@ -98,12 +98,8 @@ function Info() {
       <View style={styles.containerTwo}>
         <Text style={styles.labelSelect}>Nuova Categoria: </Text>
         <TextInput
-          id="type"
-          name="type"
-          title="type"
-          type="text"
           style={styles.infoInput}
-          onChange={handleChange}
+          onChangeText={handleChange("type")}
           value={values.type}
         />
         <TouchableOpacity style={styles.submitButton} onClick={handleSubmit}>
@@ -129,12 +125,8 @@ function Info() {
         </View>
         <Text style={styles.labelSelect}>Inserisci il nuovo nome: </Text>
         <TextInput
-          id="typeChange"
-          name="typeChange"
-          title="typeChange"
-          type="text"
           style={styles.infoInput}
-          onChange={handleChange}
+          onChangeText={handleChange("typeChange")}
           value={values.typeChange}
         />
         <View style={styles.buttonContainer}>
