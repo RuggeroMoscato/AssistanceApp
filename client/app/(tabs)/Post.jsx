@@ -137,10 +137,7 @@ function Info() {
           onChangeText={handleChange("malfunction")}
           value={values.malfunction}
         />
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={()=>handleSubmit(values,selectedRobot,selectedType)}
-        >
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={{ color: "white", fontWeight: "bold" }}>Invia</Text>
         </TouchableOpacity>
       </View>
