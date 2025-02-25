@@ -60,12 +60,18 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     fontSize: 16,
     marginBottom: 10,
-    minHeight: 100,
-    textAlignVertical: "top",
   },
-  multilineText: {
+  multilineTextInput: {
     minHeight: 100,
     textAlignVertical: "top",
+    width: "100%",
+    minHeight: 45,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    fontSize: 16,
+    marginBottom: 10,
   },
   submitButton: {
     backgroundColor: "rgb(52, 209, 191)",

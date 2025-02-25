@@ -134,7 +134,7 @@ function Info() {
         </View>
         <Text>Inserisci il Guasto: </Text>
         <TextInput
-          style={styles.infoInput}
+          style={styles.multilineTextInput}
           onChangeText={handleChange("malfunction")}
           value={values.malfunction}
           multiline
