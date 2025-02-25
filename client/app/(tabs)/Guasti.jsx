@@ -11,7 +11,10 @@ import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 import styles from "../styles";
 import { router } from "expo-router";
-import DatePicker from "react-native-date-picker";
+import DateTimePicker, {
+  DateType,
+  getDefaultStyles,
+} from "react-native-ui-datepicker";
 import LogoutIcon from "../../assets/icons/logout.png";
 
 function RobotMalfunctions() {
@@ -20,9 +23,9 @@ function RobotMalfunctions() {
   const [malfunctions, setMalfunctions] = useState([]);
   const [selectedRobot, setSelectedRobot] = useState("");
   const [selectedType, setSelectedType] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [openPicker, setOpenPicker] = useState(false);
-
+  const defaultStyles = getDefaultStyles();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   useEffect(() => {
     const fetchRobots = async () => {
       try {
@@ -64,7 +67,6 @@ function RobotMalfunctions() {
     };
     getData();
   }, []);
-
 
   const handleSubmit = async (idRobot) => {
     try {
@@ -130,40 +132,44 @@ function RobotMalfunctions() {
               />
             ))}
           </Picker>
-
-          <Button title="OpenPicker" onPress={() => setOpenPicker(true)} />
-          <DatePicker
-            modal
-            open={openPicker}
-            date={date}
-            onConfirm={(date) => {
-              setOpenPicker(false);
-              setDate(date);
+          <DateTimePicker
+            mode="range"
+            startDate={startDate}
+            endDate={endDate}
+            onChange={({ startDate, endDate }) => {
+              setStartDate(startDate);
+              setEndDate(endDate);
             }}
-            onCancel={() => setOpenPicker(false)}
+            styles={defaultStyles}
           />
         </View>
 
         <View style={styles.malfunctionList}>
           {malfunctions.length > 0 ? (
-            selectedType !== "Tutti" ? (
-              malfunctions
-                .filter(
-                  (malfunction) => malfunction.idType === Number(selectedType)
-                )
-                .map((malfunction, index) => (
-                  <View key={index} style={styles.malfunctionItem}>
-                    <Text style={styles.malfunctionText}>
-                      {malfunction.guasto} -{" "}
-                      <Text style={styles.dateText}>
-                        {new Date(malfunction.data).toLocaleDateString("it-IT")}
-                      </Text>{" "}
-                      - <Text style={styles.dateText}>{malfunction.type}</Text>
-                    </Text>
-                  </View>
-                ))
-            ) : (
-              malfunctions.map((malfunction, index) => (
+            malfunctions
+              .filter((malfunction) => {
+                const malfunctionDate = new Date(malfunction.data);
+
+                // Check if date range is selected
+                if (startDate && endDate) {
+                  return (
+                    malfunctionDate >= new Date(startDate) &&
+                    malfunctionDate <= new Date(endDate)
+                  );
+                }
+                if (startDate && !endDate) {
+                  return (malfunctionDate == new Date(startDate));
+                }
+
+                // If no date is selected, show all malfunctions
+                return true;
+              })
+              .filter((malfunction) =>
+                selectedType !== "Tutti"
+                  ? malfunction.idType === Number(selectedType)
+                  : true
+              )
+              .map((malfunction, index) => (
                 <View key={index} style={styles.malfunctionItem}>
                   <Text style={styles.malfunctionText}>
                     {malfunction.guasto} -{" "}
@@ -174,7 +180,6 @@ function RobotMalfunctions() {
                   </Text>
                 </View>
               ))
-            )
           ) : (
             <Text style={styles.noDataText}>Nessun guasto trovato</Text>
           )}
