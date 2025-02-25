@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     fontSize: 16,
     marginBottom: 10,
+    minHeight: 100,
+    textAlignVertical: "top",
+  },
+  multilineText: {
+    minHeight: 100,
+    textAlignVertical: "top",
   },
   submitButton: {
     backgroundColor: "rgb(52, 209, 191)",
@@ -194,7 +200,6 @@ const styles = StyleSheet.create({
     width: "40%",
     height: "80%",
   },
-
   AppRobot: {
     flex: 1,
     backgroundColor: "#f0f4f8",
@@ -261,7 +266,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: "60%",
   },
-
 
   picker: {
     flex: 1,

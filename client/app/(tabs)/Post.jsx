@@ -84,10 +84,10 @@ function Info() {
     },
   });
 
-   const handleLogout = async () => {
-     authInstance.signOut();
-     router.push("/");
-   };
+  const handleLogout = async () => {
+    authInstance.signOut();
+    router.push("/");
+  };
 
   return (
     <ScrollView style={styles.App}>
@@ -134,10 +134,10 @@ function Info() {
         </View>
         <Text>Inserisci il Guasto: </Text>
         <TextInput
-          multiline
           style={styles.infoInput}
           onChangeText={handleChange("malfunction")}
           value={values.malfunction}
+          multiline
         />
         <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={{ color: "white", fontWeight: "bold" }}>Invia</Text>
