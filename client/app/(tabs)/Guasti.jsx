@@ -27,6 +27,7 @@ function RobotMalfunctions() {
   const defaultStyles = getDefaultStyles();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  
   useEffect(() => {
     const fetchRobots = async () => {
       try {
@@ -152,7 +153,6 @@ function RobotMalfunctions() {
               .filter((malfunction) => {
                 const malfunctionDate = new Date(malfunction.data);
 
-                // Check if date range is selected
                 if (startDate && endDate) {
                   return (
                     malfunctionDate >= new Date(startDate) &&
@@ -163,7 +163,6 @@ function RobotMalfunctions() {
                   return (malfunctionDate == new Date(startDate));
                 }
 
-                // If no date is selected, show all malfunctions
                 return true;
               })
               .filter((malfunction) =>

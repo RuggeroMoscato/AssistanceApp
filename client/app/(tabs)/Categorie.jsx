@@ -18,7 +18,7 @@ import { authInstance } from "../../firebase";
 
 function Info() {
   const [selectedType, setSelectedType] = useState("");
-  const [typeList, setTypeList] = useState([]);
+  const [typesList, setTypesList] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -29,7 +29,7 @@ function Info() {
             label: type.type,
             value: type.ID,
           }));
-          setTypeList(formattedTypes);
+          setTypesList(formattedTypes);
           setSelectedType(formattedTypes[0].value);
         }
       } catch (err) {
@@ -58,6 +58,7 @@ function Info() {
       console.log(err);
     }
   };
+  
   const deletePost = async (ID) => {
     try {
       const res = await axios.post("http://192.168.1.143:3000/typeDelete", {
@@ -112,10 +113,12 @@ function Info() {
           <Text style={styles.labelSelect}> Seleziona categoria:</Text>
           <Picker
             selectedValue={selectedType}
-            onValueChange={(itemValue) => setSelectedType(itemValue)}
+            onValueChange={(itemValue) => {
+              setSelectedType(itemValue);
+            }}
             style={styles.picker}
           >
-            {typeList.map((type) => (
+            {typesList.map((type) => (
               <Picker.Item
                 key={type.value}
                 label={type.label}

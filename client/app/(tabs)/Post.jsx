@@ -81,6 +81,7 @@ function Info() {
     }),
     onSubmit: (values) => {
       infoPost(values, selectedRobot, selectedType);
+      
     },
   });
 
