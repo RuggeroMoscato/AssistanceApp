@@ -100,8 +100,8 @@ function Info() {
         </View>
       </View>
       <View style={styles.container}>
-        <View style={styles.infoRobotSheet}>
-          <Text style={styles.labelRobot}>Seleziona il robot:</Text>
+        <View style={styles.infoRobotSheetColumn}>
+          <Text style={styles.labelSelect}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
             onValueChange={(itemValue) => setSelectedRobot(itemValue)}
@@ -116,8 +116,8 @@ function Info() {
             ))}
           </Picker>
         </View>
-        <View style={styles.infoRobotSheet}>
-          <Text style={styles.labelRobot}>Seleziona la categoria:</Text>
+        <View style={styles.infoRobotSheetColumn}>
+          <Text style={styles.labelSelect}>Seleziona la categoria:</Text>
           <Picker
             selectedValue={selectedType}
             onValueChange={(itemValue) => setSelectedType(itemValue)}
@@ -132,7 +132,7 @@ function Info() {
             ))}
           </Picker>
         </View>
-        <Text>Inserisci il Guasto: </Text>
+        <Text style={styles.labelSelect}>Inserisci il Guasto: </Text>
         <TextInput
           style={styles.multilineTextInput}
           onChangeText={handleChange("malfunction")}

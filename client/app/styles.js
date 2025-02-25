@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#2d3748",
     fontSize: 16,
-    width: "60%",
+    width: "55%",
   },
 
   picker: {

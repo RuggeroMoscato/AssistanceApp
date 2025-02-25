@@ -57,8 +57,8 @@ function Scheda() {
         </TouchableOpacity>
       </View>
       <View style={styles.containerRobot}>
-        <View style={styles.infoRobotSheet}>
-          <Text style={styles.labelRobot}>Seleziona il robot:</Text>
+        <View style={styles.infoRobotSheetColumn}>
+          <Text style={styles.labelSelect}>Seleziona il robot:</Text>
           <Picker
             selectedValue={selectedRobot}
             onValueChange={(itemValue) => {

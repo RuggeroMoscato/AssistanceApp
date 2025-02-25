@@ -108,8 +108,8 @@ function Info() {
         </TouchableOpacity>
       </View>
       <View style={styles.containerTwo}>
-        <View style={styles.infoRobotSheet}>
-          <Text style={styles.labelRobot}> Modifica categoria:</Text>
+        <View style={styles.infoRobotSheetColumn}>
+          <Text style={styles.labelSelect}> Seleziona categoria:</Text>
           <Picker
             selectedValue={selectedType}
             onValueChange={(itemValue) => setSelectedType(itemValue)}
