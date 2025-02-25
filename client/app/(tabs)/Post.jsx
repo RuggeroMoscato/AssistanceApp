@@ -15,6 +15,7 @@ import {
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
+import { authInstance } from "../../firebase";
 
 function Info() {
   const [selectedRobot, setSelectedRobot] = useState("");
@@ -83,9 +84,10 @@ function Info() {
     },
   });
 
-  const handleLogout = async () => {
-    router.push("/");
-  };
+   const handleLogout = async () => {
+     authInstance.signOut();
+     router.push("/");
+   };
 
   return (
     <ScrollView style={styles.App}>

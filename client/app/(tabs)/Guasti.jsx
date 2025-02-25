@@ -16,6 +16,7 @@ import DateTimePicker, {
   getDefaultStyles,
 } from "react-native-ui-datepicker";
 import LogoutIcon from "../../assets/icons/logout.png";
+import { authInstance } from "../../firebase";
 
 function RobotMalfunctions() {
   const [robotsList, setRobotsList] = useState([]);
@@ -81,7 +82,8 @@ function RobotMalfunctions() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    authInstance.signOut();
     router.push("/");
   };
 

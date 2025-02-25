@@ -14,6 +14,7 @@ import {
 import { router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
+import { authInstance } from "../../firebase";
 
 function Info() {
   const [selectedType, setSelectedType] = useState("");
@@ -81,6 +82,7 @@ function Info() {
   });
 
   const handleLogout = async () => {
+    authInstance.signOut();
     router.push("/");
   };
 
