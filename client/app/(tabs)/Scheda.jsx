@@ -5,8 +5,6 @@ import LogoutIcon from "../../assets/icons/logout.png";
 import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
-import { authInstance } from "../../firebase";
-
 function Scheda() {
   const [robotsList, setRobotsList] = useState([]);
   const [robotInfo, setRobotInfo] = useState();
@@ -44,8 +42,10 @@ function Scheda() {
     }
   };
   const handleLogout = async () => {
-    authInstance.signOut();
-    router.push("/");
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("refreshToken");
+    setIsLogged(false);
+    router.replace("/");
   };
 
   return (

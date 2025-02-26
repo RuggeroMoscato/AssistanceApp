@@ -14,7 +14,6 @@ import {
 import { router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
-import { authInstance } from "../../firebase";
 
 function Info() {
   const [selectedType, setSelectedType] = useState("");
@@ -101,11 +100,12 @@ function Info() {
       },
     });
 
-  const handleLogout = async () => {
-    authInstance.signOut();
-    router.push("/");
-  };
-
+    const handleLogout = async () => {
+      await AsyncStorage.removeItem("accessToken");
+      await AsyncStorage.removeItem("refreshToken");
+      setIsLogged(false);
+      router.replace("/");
+    };
   return (
     <ScrollView style={styles.App}>
       <View style={styles.header}>
