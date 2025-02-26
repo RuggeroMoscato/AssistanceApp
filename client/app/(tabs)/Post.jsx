@@ -72,7 +72,7 @@ function Info() {
     }
   };
 
-  const { handleChange, values, handleSubmit, touched, errors } = useFormik({
+  const { handleChange, values, handleSubmit, touched, errors, resetForm } = useFormik({
     initialValues: {
       malfunction: "",
     },
@@ -81,7 +81,7 @@ function Info() {
     }),
     onSubmit: (values) => {
       infoPost(values, selectedRobot, selectedType);
-      
+      resetForm();
     },
   });
 

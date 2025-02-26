@@ -37,28 +37,45 @@ function Info() {
       }
     };
     getData();
-  }, [selectedType]);
+  }, []);
 
   const infoPost = async (type) => {
     try {
       const res = await axios.post("http://192.168.1.143:3000/typePost", {
         type: type,
       });
+      const resType = await axios.get("http://192.168.1.143:3000/types");
+      if (resType.status === 200) {
+        const formattedTypes = resType.data.map((type) => ({
+          label: type.type,
+          value: type.ID,
+        }));
+        setTypesList(formattedTypes);
+      }
     } catch (err) {
       console.log(err);
     }
   };
-  const modifyPost = async (typeChange, ID) => {
+  const modifyPost = async (typeChange, ID, resetForm) => {
     try {
       const res = await axios.post("http://192.168.1.143:3000/typeModify", {
         typeChange: typeChange,
         ID: ID,
       });
+      const resType = await axios.get("http://192.168.1.143:3000/types");
+      if (resType.status === 200) {
+        const formattedTypes = resType.data.map((type) => ({
+          label: type.type,
+          value: type.ID,
+        }));
+        setTypesList(formattedTypes);
+      }
+      resetForm();
     } catch (err) {
       console.log(err);
     }
   };
-  
+
   const deletePost = async (ID) => {
     try {
       const res = await axios.post("http://192.168.1.143:3000/typeDelete", {
@@ -69,18 +86,20 @@ function Info() {
     }
   };
 
-  const { handleChange, values, handleSubmit, touched, errors } = useFormik({
-    initialValues: {
-      type: "",
-      typeChange: "",
-    },
-    validationSchema: Yup.object({
-      type: Yup.string().required("Nome della categoria richiesta"),
-    }),
-    onSubmit: (values) => {
-      infoPost(values.type, selectedType);
-    },
-  });
+  const { handleChange, values, handleSubmit, touched, errors, resetForm } =
+    useFormik({
+      initialValues: {
+        type: "",
+        typeChange: "",
+      },
+      validationSchema: Yup.object({
+        type: Yup.string().required("Nome della categoria richiesta"),
+      }),
+      onSubmit: (values) => {
+        infoPost(values.type, selectedType);
+        resetForm();
+      },
+    });
 
   const handleLogout = async () => {
     authInstance.signOut();
@@ -104,7 +123,7 @@ function Info() {
           onChangeText={handleChange("type")}
           value={values.type}
         />
-        <TouchableOpacity style={styles.submitButton} onClick={handleSubmit}>
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
           <Text style={{ color: "white", fontWeight: "bold" }}>Invia</Text>
         </TouchableOpacity>
       </View>
@@ -136,13 +155,15 @@ function Info() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.deleteButton}
-            onClick={() => deletePost(selectedType)}
+            onPress={() => deletePost(selectedType)}
           >
             <Text style={{ color: "white", fontWeight: "bold" }}>Elimina</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.modifyButton}
-            onClick={() => modifyPost(values.typeChange, selectedType)}
+            onPress={() =>
+              modifyPost(values.typeChange, selectedType, resetForm)
+            }
           >
             <Text style={{ color: "white", fontWeight: "bold" }}>Modifica</Text>
           </TouchableOpacity>
