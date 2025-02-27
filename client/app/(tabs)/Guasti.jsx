@@ -69,6 +69,28 @@ function RobotMalfunctions() {
     };
     getData();
   }, []);
+  
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get("http://192.168.1.143:3000/types");
+        if (res.status === 200) {
+          const formattedTypes = res.data.map((type) => ({
+            label: type.type,
+            value: type.ID,
+          }));
+          const allOption = { label: "Tutti", value: "Tutti" };
+          const updatedTypesList = [allOption, ...formattedTypes];
+
+          setTypesList(updatedTypesList);
+        }
+      } catch (err) {
+      alert("Non è stato possibile recuperare la lista delle categorie");
+        console.log(err);
+      }
+    };
+    getData();
+  }, [selectedType]);
 
   const handleSubmit = async (idRobot) => {
     try {
