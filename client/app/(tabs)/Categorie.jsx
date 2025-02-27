@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 function Info() {
   const [selectedType, setSelectedType] = useState("");
   const [typesList, setTypesList] = useState([]);
+  const [modify, setModify] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -32,7 +33,7 @@ function Info() {
           setSelectedType(formattedTypes[0].value);
         }
       } catch (err) {
-      alert("Non è stato possibile recuperare la lista delle categorie");
+        alert("Non è stato possibile recuperare la lista delle categorie");
         console.log(err);
       }
     };
@@ -53,7 +54,9 @@ function Info() {
         setTypesList(formattedTypes);
       }
     } catch (err) {
-      alert("Errore nell'invio della categoria o nel recupero della nuova lista");
+      alert(
+        "Errore nell'invio della categoria o nel recupero della nuova lista"
+      );
       console.log(err);
     }
   };
@@ -73,7 +76,9 @@ function Info() {
       }
       resetForm();
     } catch (err) {
-      alert("Errore nella modifica della categoria o nel recupero della nuova lista");
+      alert(
+        "Errore nella modifica della categoria o nel recupero della nuova lista"
+      );
       console.log(err);
     }
   };
@@ -92,7 +97,9 @@ function Info() {
         setTypesList(formattedTypes);
       }
     } catch (err) {
-      alert("Errore nella rimozione della categoria o nel recupero dell nuova lista");
+      alert(
+        "Errore nella rimozione della categoria o nel recupero dell nuova lista"
+      );
       console.log(err);
     }
   };
@@ -105,12 +112,21 @@ function Info() {
       },
       validationSchema: Yup.object({
         type: Yup.string().required("Nome della categoria richiesta"),
+        typeChange: Yup.string().required("Nome della categoria richiesta"),
       }),
       onSubmit: (values) => {
         infoPost(values.type, selectedType);
         resetForm();
       },
     });
+
+  useEffect(() => {
+    if (values.typeChange === "") {
+      setModify(true);
+    } else {
+      setModify(false);
+    }
+  }, [values.typeChange]);
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem("accessToken");
@@ -172,7 +188,11 @@ function Info() {
             <Text style={{ color: "white", fontWeight: "bold" }}>Elimina</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.modifyButton}
+            style={[
+              styles.modifyButton,
+              modify ? { backgroundColor: "grey" } : {},
+            ]}
+            disabled={modify}
             onPress={() =>
               modifyPost(values.typeChange, selectedType, resetForm)
             }
