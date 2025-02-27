@@ -80,6 +80,14 @@ function Info() {
       const res = await axios.post("http://192.168.1.143:3000/typeDelete", {
         ID: ID,
       });
+      const resType = await axios.get("http://192.168.1.143:3000/types");
+      if (resType.status === 200) {
+        const formattedTypes = resType.data.map((type) => ({
+          label: type.type,
+          value: type.ID,
+        }));
+        setTypesList(formattedTypes);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -100,12 +108,12 @@ function Info() {
       },
     });
 
-    const handleLogout = async () => {
-      await AsyncStorage.removeItem("accessToken");
-      await AsyncStorage.removeItem("refreshToken");
-      setIsLogged(false);
-      router.replace("/");
-    };
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("refreshToken");
+    setIsLogged(false);
+    router.replace("/");
+  };
   return (
     <ScrollView style={styles.App}>
       <View style={styles.header}>

@@ -32,7 +32,7 @@ const Login = () => {
 
           if (res.status === 200) {
             setIsLogged(true);
-            router.replace("/RobotSheet"); // Navigate to main screen
+            router.replace("/Scheda"); // Navigate to main screen
           }
         } catch (error) {
           // If access token is expired, try refreshing it
@@ -52,7 +52,7 @@ const Login = () => {
                   refreshRes.data.accessToken
                 );
                 setIsLogged(true);
-                router.replace("/RobotSheet");
+                router.replace("/Scheda");
               }
             } catch (refreshErr) {
               console.log("Refresh token expired, logging out...");
