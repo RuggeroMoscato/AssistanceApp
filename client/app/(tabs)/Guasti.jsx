@@ -40,6 +40,7 @@ function RobotMalfunctions() {
           handleSubmit(formattedRobots[0].value);
         }
       } catch (err) {
+      alert("Non è stato possibile recuperare la lista dei robot");
         console.error(err);
       }
     };
@@ -62,6 +63,7 @@ function RobotMalfunctions() {
           setSelectedType("Tutti");
         }
       } catch (err) {
+      alert("Non è stato possibile recuperare la lista delle categorie");
         console.log(err);
       }
     };
@@ -77,6 +79,7 @@ function RobotMalfunctions() {
         setMalfunctions(res.data);
       }
     } catch (err) {
+      alert("Non è stato possibile recuperare la lista dei guasti");
       console.error(err);
     }
   };

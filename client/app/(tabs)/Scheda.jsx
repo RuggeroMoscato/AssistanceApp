@@ -23,6 +23,7 @@ function Scheda() {
           handleSubmit(formattedRobots[0].value);
         }
       } catch (err) {
+        alert("Non è stato possibile recuperare la lista dei robot");
         console.log(err);
       }
     };
@@ -38,6 +39,7 @@ function Scheda() {
       } else {
       }
     } catch (err) {
+      alert("Errore nel recuperare le informazioni del robot");
       console.log(err);
     }
   };

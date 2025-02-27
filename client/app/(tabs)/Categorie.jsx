@@ -32,6 +32,7 @@ function Info() {
           setSelectedType(formattedTypes[0].value);
         }
       } catch (err) {
+      alert("Non è stato possibile recuperare la lista delle categorie");
         console.log(err);
       }
     };
@@ -52,6 +53,7 @@ function Info() {
         setTypesList(formattedTypes);
       }
     } catch (err) {
+      alert("Errore nell'invio della categoria o nel recupero della nuova lista");
       console.log(err);
     }
   };
@@ -71,6 +73,7 @@ function Info() {
       }
       resetForm();
     } catch (err) {
+      alert("Errore nella modifica della categoria o nel recupero della nuova lista");
       console.log(err);
     }
   };
@@ -89,6 +92,7 @@ function Info() {
         setTypesList(formattedTypes);
       }
     } catch (err) {
+      alert("Errore nella rimozione della categoria o nel recupero dell nuova lista");
       console.log(err);
     }
   };

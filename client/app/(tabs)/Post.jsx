@@ -35,6 +35,7 @@ function Info() {
           setSelectedRobot(formattedRobots[0].value);
         }
       } catch (err) {
+        alert("Non è stato possibile recuperare la lista dei robot");
         console.log(err);
       }
     };
@@ -53,11 +54,31 @@ function Info() {
           setSelectedType(formattedTypes[0].value);
         }
       } catch (err) {
+        alert("Non è stato possibile recuperare la lista delle categorie");
         console.log(err);
       }
     };
     getData();
   }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get("http://192.168.1.143:3000/types");
+        if (res.status === 200) {
+          const formattedTypes = res.data.map((type) => ({
+            label: type.type,
+            value: type.ID,
+          }));
+          setTypeList(formattedTypes);
+        }
+      } catch (err) {
+        alert("Errore nel recuperare la lista delle categorie");
+        console.log(err);
+      }
+    };
+    getData();
+  }, [selectedType]);
 
   const infoPost = async (values, robotId, typeId) => {
     try {
@@ -67,22 +88,24 @@ function Info() {
         typeId: typeId,
       });
     } catch (err) {
+      alert("Errore nell'invio del guasto");
       console.log(err);
     }
   };
 
-  const { handleChange, values, handleSubmit, touched, errors, resetForm } = useFormik({
-    initialValues: {
-      malfunction: "",
-    },
-    validationSchema: Yup.object({
-      malfunction: Yup.string().required("Descrizione del guasto richiesta"),
-    }),
-    onSubmit: (values) => {
-      infoPost(values, selectedRobot, selectedType);
-      resetForm();
-    },
-  });
+  const { handleChange, values, handleSubmit, touched, errors, resetForm } =
+    useFormik({
+      initialValues: {
+        malfunction: "",
+      },
+      validationSchema: Yup.object({
+        malfunction: Yup.string().required("Descrizione del guasto richiesta"),
+      }),
+      onSubmit: (values) => {
+        infoPost(values, selectedRobot, selectedType);
+        resetForm();
+      },
+    });
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem("accessToken");
