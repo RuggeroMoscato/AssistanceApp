@@ -16,53 +16,29 @@ const Login = () => {
   useEffect(() => {
     const checkUserSession = async () => {
       const token = await AsyncStorage.getItem("accessToken");
-      const refreshToken = await AsyncStorage.getItem("refreshToken");
-
+  
       if (token) {
         try {
-          // Try authenticating with the access token
+          // Tenta l'autenticazione con l'access token
           const res = await axios.post(
             `http://192.168.1.143:3000/auth`,
             {},
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
+            { headers: { Authorization: `Bearer ${token}` } }
           );
-
+  
           if (res.status === 200) {
-            router.replace("/Scheda"); // Navigate to main screen
+            router.replace("/Scheda"); // Naviga alla schermata principale
           }
         } catch (error) {
-          // If access token is expired, try refreshing it
-          if (refreshToken) {
-            try {
-              const refreshRes = await axios.post(
-                `http://192.168.1.143:3000/refreshToken`,
-                {},
-                {
-                  headers: { Authorization: `Bearer ${refreshToken}` },
-                }
-              );
-
-              if (refreshRes.data.accessToken) {
-                await AsyncStorage.setItem(
-                  "accessToken",
-                  refreshRes.data.accessToken
-                );
-                router.replace("/Scheda");
-              }
-            } catch (refreshErr) {
-              console.log("Refresh token expired, logging out...");
-              await AsyncStorage.removeItem("accessToken");
-              await AsyncStorage.removeItem("refreshToken");
-            }
-          }
+          console.log("Token scaduto, richiedi il login...");
+          await AsyncStorage.removeItem("accessToken");
+          router.replace("/"); // Rimanda alla schermata di login
         }
       }
-
+  
       setLoading(false);
     };
-
+  
     checkUserSession();
   }, []);
 
@@ -73,12 +49,10 @@ const Login = () => {
         email,
         password,
       });
-
+  
       if (res.status === 200) {
-        // Store tokens in AsyncStorage
         await AsyncStorage.setItem("accessToken", res.data.accessToken);
-        await AsyncStorage.setItem("refreshToken", res.data.refreshToken);
-        router.replace("/Scheda"); // Navigate after login
+        router.replace("/Scheda"); // Naviga alla schermata principale
       }
     } catch (error) {
       console.log(error);

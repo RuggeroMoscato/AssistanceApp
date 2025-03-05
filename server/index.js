@@ -168,6 +168,7 @@ app.listen(3000, () => {
     console.log(err);
   }
 });
+
 app.post("/login", async (req, res) => {
   const pool = await sql.connect(config);
   try {
@@ -184,7 +185,7 @@ app.post("/login", async (req, res) => {
 
     const user = checkUserResult.recordset[0];
 
-    // Decrypt and check the password
+    // Decripta e verifica la password
     const hashedPassword = CryptoJS.AES.decrypt(
       user.Password,
       process.env.PASS_SEC
@@ -195,52 +196,23 @@ app.post("/login", async (req, res) => {
       return res.status(403).json({ message: "Invalid password" });
     }
 
-    // Generate JWT Tokens
+    // Genera access token
     const accessToken = jwt.sign(
       { userId: user.ID, userGrade: user.Grade },
       process.env.JWT_SEC,
-      { expiresIn: "15m" } // Increase access token expiration for better UX
-    );
-
-    const refreshToken = jwt.sign(
-      { userId: user.ID, userGrade: user.Grade },
-      process.env.JWT_SEC,
-      { expiresIn: "7d" } // Refresh token lasts longer
+      { expiresIn: "1d" } // Scadenza del token
     );
 
     const { password, Grade, ID, ...others } = user;
 
     return res.status(200).json({
       user: others,
-      accessToken,
-      refreshToken, // Send refresh token in the response
+      accessToken, // Invia solo l'access token
     });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Internal server error" });
   }
-});
-
-app.post("/refreshToken", (req, res) => {
-  const refreshToken = req.headers.authorization?.split(" ")[1];
-
-  if (!refreshToken) {
-    return res.status(401).json({ message: "Refresh token missing" });
-  }
-
-  jwt.verify(refreshToken, process.env.JWT_SEC, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid refresh token" });
-    }
-
-    const newAccessToken = jwt.sign(
-      { userId: decoded.userId, userGrade: decoded.userGrade },
-      process.env.JWT_SEC,
-      { expiresIn: "15m" }
-    );
-
-    return res.status(200).json({ accessToken: newAccessToken });
-  });
 });
 
 app.post("/auth", verifyToken, (req, res) => {
