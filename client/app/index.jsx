@@ -10,7 +10,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const Login = () => {
-  const [isLogged, setIsLogged] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Check for existing tokens when the app starts
@@ -31,7 +30,6 @@ const Login = () => {
           );
 
           if (res.status === 200) {
-            setIsLogged(true);
             router.replace("/Scheda"); // Navigate to main screen
           }
         } catch (error) {
@@ -51,7 +49,6 @@ const Login = () => {
                   "accessToken",
                   refreshRes.data.accessToken
                 );
-                setIsLogged(true);
                 router.replace("/Scheda");
               }
             } catch (refreshErr) {
@@ -72,13 +69,15 @@ const Login = () => {
   //  Login Function
   const login = async (email, password) => {
     try {
-      const res = await axios.post(`http://192.168.1.143:3000/login`, { email, password });
+      const res = await axios.post(`http://192.168.1.143:3000/login`, {
+        email,
+        password,
+      });
 
       if (res.status === 200) {
         // Store tokens in AsyncStorage
         await AsyncStorage.setItem("accessToken", res.data.accessToken);
         await AsyncStorage.setItem("refreshToken", res.data.refreshToken);
-        setIsLogged(true);
         router.replace("/Scheda"); // Navigate after login
       }
     } catch (error) {

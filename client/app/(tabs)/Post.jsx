@@ -15,7 +15,7 @@ import {
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 function Info() {
   const [selectedRobot, setSelectedRobot] = useState("");
   const [robotsList, setRobotsList] = useState([]);
@@ -110,7 +110,6 @@ function Info() {
   const handleLogout = async () => {
     await AsyncStorage.removeItem("accessToken");
     await AsyncStorage.removeItem("refreshToken");
-    setIsLogged(false);
     router.replace("/");
   };
 

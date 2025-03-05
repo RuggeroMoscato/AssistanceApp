@@ -5,10 +5,12 @@ import LogoutIcon from "../../assets/icons/logout.png";
 import { ScrollView, Text, View, TouchableOpacity, Image } from "react-native";
 import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 function Scheda() {
   const [robotsList, setRobotsList] = useState([]);
   const [robotInfo, setRobotInfo] = useState();
   const [selectedRobot, setSelectedRobot] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -46,10 +48,8 @@ function Scheda() {
   const handleLogout = async () => {
     await AsyncStorage.removeItem("accessToken");
     await AsyncStorage.removeItem("refreshToken");
-    setIsLogged(false);
     router.replace("/");
   };
-
   return (
     <ScrollView style={styles.AppRobot}>
       <View style={styles.headerRobot}>

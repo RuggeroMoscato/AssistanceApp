@@ -15,6 +15,7 @@ import DateTimePicker, {
   DateType,
   getDefaultStyles,
 } from "react-native-ui-datepicker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import LogoutIcon from "../../assets/icons/logout.png";
 function RobotMalfunctions() {
   const [robotsList, setRobotsList] = useState([]);
@@ -108,7 +109,6 @@ function RobotMalfunctions() {
   const handleLogout = async () => {
     await AsyncStorage.removeItem("accessToken");
     await AsyncStorage.removeItem("refreshToken");
-    setIsLogged(false);
     router.replace("/");
   };
   return (
