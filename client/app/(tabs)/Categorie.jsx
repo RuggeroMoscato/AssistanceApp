@@ -130,7 +130,6 @@ function Info() {
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem("accessToken");
-    await AsyncStorage.removeItem("refreshToken");
     router.push("/");
   };
   return (

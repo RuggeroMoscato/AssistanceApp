@@ -200,7 +200,7 @@ app.post("/login", async (req, res) => {
     const accessToken = jwt.sign(
       { userId: user.ID, userGrade: user.Grade },
       process.env.JWT_SEC,
-      { expiresIn: "1d" } // Scadenza del token
+      { expiresIn: "4h" } // Scadenza del token
     );
 
     const { password, Grade, ID, ...others } = user;
