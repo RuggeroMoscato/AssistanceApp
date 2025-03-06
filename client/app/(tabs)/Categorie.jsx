@@ -43,7 +43,7 @@ function Info() {
 
   const infoPost = async (type) => {
     try {
-      const res = await axios.post("http://192.168.1.143:3000/typePost", {
+      const res = await axios.post("http://192.168.1.143:3000/typepost", {
         type: type,
       });
       const resType = await axios.get("http://192.168.1.143:3000/types");
@@ -63,7 +63,7 @@ function Info() {
   };
   const modifyPost = async (typeChange, ID, resetForm) => {
     try {
-      const res = await axios.post("http://192.168.1.143:3000/typeModify", {
+      const res = await axios.post("http://192.168.1.143:3000/typemodify", {
         typeChange: typeChange,
         ID: ID,
       });
@@ -86,7 +86,7 @@ function Info() {
 
   const deletePost = async (ID) => {
     try {
-      const res = await axios.post("http://192.168.1.143:3000/typeDelete", {
+      const res = await axios.post("http://192.168.1.143:3000/typedelete", {
         ID: ID,
       });
       const resType = await axios.get("http://192.168.1.143:3000/types");

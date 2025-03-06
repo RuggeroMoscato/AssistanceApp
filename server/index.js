@@ -23,14 +23,16 @@ app.post("/infopost", async (req, res) => {
   const timestamp = new Date(date.getTime() - offsetMs).toISOString();
   const robotId = parseInt(req.body.robotId, 10);
   const typeId = parseInt(req.body.typeId, 10);
+  const userId = parseInt(req.body.userId, 10);
   try {
-    const q = `INSERT INTO Guasti(idRobot, guasto, data, idType) VALUES(@idRobot, @guasto, @data, @idType)`;
+    const q = `INSERT INTO Guasti(idRobot, guasto, data, idType, idUser) VALUES(@idRobot, @guasto, @data, @idType, @idUser)`;
     pool
       .request()
       .input("guasto", sql.NVarChar, req.body.values.malfunction)
       .input("data", sql.Date, timestamp)
       .input("idRobot", sql.Int, robotId)
       .input("idType", sql.Int, typeId)
+      .input("idUser", sql.Int, userId)
       .query(q);
     return res.status(200).send("malfunctions sended correctly");
   } catch (err) {
@@ -91,7 +93,7 @@ app.get("/types", async (req, res) => {
   }
 });
 
-app.post("/typePost", async (req, res) => {
+app.post("/typepost", async (req, res) => {
   const pool = await sql.connect(config);
 
   try {
@@ -113,7 +115,7 @@ app.post("/typePost", async (req, res) => {
   }
 });
 
-app.post("/typeDelete", async (req, res) => {
+app.post("/typedelete", async (req, res) => {
   const pool = await sql.connect(config);
   const id = parseInt(req.body.ID, 10);
   try {
@@ -135,7 +137,7 @@ app.post("/typeDelete", async (req, res) => {
   }
 });
 
-app.post("/typeModify", async (req, res) => {
+app.post("/typemodify", async (req, res) => {
   const pool = await sql.connect(config);
   const id = parseInt(req.body.ID, 10);
   try {

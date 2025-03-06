@@ -16,11 +16,26 @@ import { Redirect, router } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { jwtDecode } from "jwt-decode";
+
 function Info() {
   const [selectedRobot, setSelectedRobot] = useState("");
   const [robotsList, setRobotsList] = useState([]);
   const [selectedType, setSelectedType] = useState("");
   const [typesList, setTypeList] = useState([]);
+
+  const getUserId = async () => {
+    try {
+      const token = await AsyncStorage.getItem("accessToken");
+      if (!token) return null;
+
+      const decodedToken = jwtDecode(token);
+      return decodedToken.userId;
+    } catch (err) {
+      console.log("Error decoding token:", err);
+      return null;
+    }
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -82,10 +97,16 @@ function Info() {
 
   const infoPost = async (values, robotId, typeId) => {
     try {
+      const userId = await getUserId();
+      if (!userId) {
+        alert("Errore: impossibile ottenere l'ID utente");
+        return;
+      }
       const res = await axios.post("http://192.168.1.143:3000/infopost", {
         values: values,
         robotId: robotId,
         typeId: typeId,
+        userId: userId,
       });
     } catch (err) {
       alert("Errore nell'invio del guasto");
