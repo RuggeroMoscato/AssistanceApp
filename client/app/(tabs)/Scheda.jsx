@@ -66,7 +66,7 @@ function Scheda() {
           fetchRobotInfo(matchedRobot.value);
           Alert.alert(
             "Robot Selected",
-            "Robot ${matchedRobot.label} has been selected."
+            `Robot ${matchedRobot.label} has been selected.`
           );
         } else {
           Alert.alert("Error", "No matching robot found for this NFC tag.");
